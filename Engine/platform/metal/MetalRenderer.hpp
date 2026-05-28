@@ -1,0 +1,29 @@
+#pragma once
+#include "renderer/renderer.hpp"
+#include <GLFW/glfw3.h>
+
+// Wrapper around swift renderer backend
+class MetalRenderer : public Renderer {
+private:
+  void *internal_ptr;
+
+public:
+  MetalRenderer(GLFWwindow *glfw_window);
+  ~MetalRenderer();
+  void begin_scene() override;
+  void submit(const Shader *shader,
+              std::shared_ptr<VertexArray> vertex_array) override;
+  void end_scene() override;
+  void on_window_resize(uint32_t width, uint32_t height) override;
+
+  std::shared_ptr<Buffer> make_buffer(int size) override;
+  std::shared_ptr<Buffer> make_buffer(const void *bytes, int size) override;
+
+  std::shared_ptr<VertexArray> make_vertex_array(const float *vertices,
+                                                 uint32_t vertex_size,
+                                                 const uint32_t *indices,
+                                                 uint32_t index_count) override;
+
+  Shader *make_shader(std::string vertex_function,
+                      std::string fragment_function) override;
+};
