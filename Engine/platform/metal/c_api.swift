@@ -125,3 +125,46 @@ func mtl_buffer_get_size(buffer: UnsafeMutableRawPointer) -> Int {
 func free_metal_shader(shader: UnsafeMutableRawPointer) {
     Unmanaged<MTLFunction>.fromOpaque(shader).release()
 }
+
+@_cdecl("_renderer_make_pipeline")
+func renderer_make_pipeline(
+    renderer: UnsafeMutableRawPointer,
+    vertex_format: UInt32,
+    offset: Int,
+    buffer_index: Int,
+    stride: Int,
+    vertex_shader: UnsafeMutableRawPointer,
+    fragment_shader: UnsafeMutableRawPointer
+) -> UnsafeMutableRawPointer {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    let vertex_shader = Unmanaged<MTLFunction>.fromOpaque(vertex_shader)
+        .takeUnretainedValue()
+    let fragment_shader = Unmanaged<MTLFunction>.fromOpaque(fragment_shader)
+        .takeUnretainedValue()
+
+    let format: MTLVertexFormat
+    switch vertex_format {
+    case 0:
+        format = .float3
+    default:
+        format = .float3
+    }
+
+    let pipeline = renderer.make_pipeline(
+        vertex_format: format,
+        offset: offset,
+        buffer_index: buffer_index,
+        stride: stride,
+        vertex_function: vertex_shader,
+        fragment_function: fragment_shader
+    )
+
+    return Unmanaged.passRetained(pipeline).toOpaque()
+}
+
+@_cdecl("_release_metal_pipeline")
+func release_metal_pipeline(pipeline: UnsafeMutableRawPointer) {
+    Unmanaged<MTLRenderPipelineState>.fromOpaque(pipeline).release()
+}

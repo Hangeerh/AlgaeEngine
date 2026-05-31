@@ -30,6 +30,10 @@ void *_renderer_make_buffer_bytes(void *swift_renderer_ptr, const void *bytes,
 
 void *_renderer_make_shader(void *swift_renderer_ptr, const char *shader_name);
 
+void *_renderer_make_pipeline(void *swift_renderer_ptr, uint32_t vertex_format,
+                              int offset, int buffer_index, int stride,
+                              void *vertex_shader, void *fragment_shader);
+
 //
 // Buffers
 //
@@ -43,4 +47,6 @@ int _mtl_buffer_get_size(void *buffer);
 //
 
 void _free_metal_shader(void *shader);
+
+void _release_metal_pipeline(void *pipeline);
 }

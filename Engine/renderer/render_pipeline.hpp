@@ -1,0 +1,27 @@
+#pragma once
+#include "renderer/shader.hpp"
+#include <memory>
+
+enum class VertexFormat {
+  Float3 = 0,
+};
+
+class PipelineDescriptor {
+public:
+  PipelineDescriptor() = default;
+  ~PipelineDescriptor() = default;
+
+  VertexFormat vertex_format = VertexFormat::Float3;
+  int off_set = 0;
+  int buffer_index = 0;
+  int stride = 0;
+
+  std::shared_ptr<Shader> vertex_function = nullptr;
+  std::shared_ptr<Shader> fragment_function = nullptr;
+};
+
+class Pipeline {
+public:
+  Pipeline() = default;
+  virtual ~Pipeline() = default;
+};

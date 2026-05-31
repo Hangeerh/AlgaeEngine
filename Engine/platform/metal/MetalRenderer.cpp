@@ -1,6 +1,7 @@
 #include "MetalRenderer.hpp"
 #include "./c_api.hpp"
 #include "platform/metal/metal_buffers.hpp"
+#include "platform/metal/metal_render_pipeline.hpp"
 #include "platform/metal/metal_shader.hpp"
 #include "platform/metal/metal_vertex_array.hpp"
 #include <cstdint>
@@ -80,4 +81,19 @@ Shader *MetalRenderer::make_shader(std::string vertex_function,
   shader->vertex_function = vertex_shader;
 
   return shader;
+}
+
+std::shared_ptr<Pipeline>
+MetalRenderer::make_pipeline(PipelineDescriptor pipeline_desc) {
+  void *vertex_shader =
+      ((MetalShader *)pipeline_desc.vertex_function.get())->vertex_function;
+  void *fragment_shader =
+      ((MetalShader *)pipeline_desc.fragment_function.get())->fragment_function;
+
+  void *pipeline = _renderer_make_pipeline(
+      internal_ptr, static_cast<uint32_t>(pipeline_desc.vertex_format),
+      pipeline_desc.off_set, pipeline_desc.buffer_index, pipeline_desc.stride,
+      vertex_shader, fragment_shader);
+
+  return std::make_shared<MetalPipeline>(pipeline);
 }

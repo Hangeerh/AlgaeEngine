@@ -14,6 +14,7 @@ add_library(AlgaeEngine
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_buffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_render_pipeline.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_shader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_vertex_array.cpp
 )
