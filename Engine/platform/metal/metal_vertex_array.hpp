@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <memory>
 
+namespace alg {
+
 class MetalVertexArray : public VertexArray {
   friend class MetalRenderer;
 
@@ -15,3 +17,5 @@ public:
   void set_index_buffer(const std::shared_ptr<Buffer> index_buffer,
                         uint32_t index_count) override;
 };
+
+} // namespace alg

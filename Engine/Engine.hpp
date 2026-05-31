@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-namespace Engine {
+namespace alg {
 
 struct CoreWindowSpec {
   int height = 600;
@@ -29,4 +29,4 @@ private:
   GLFWwindow *glfwWindow;
   Renderer *renderer;
 };
-}; // namespace Engine
+} // namespace alg

@@ -2,6 +2,8 @@
 #include "renderer/shader.hpp"
 #include <memory>
 
+namespace alg {
+
 enum class VertexFormat {
   Float3 = 0,
 };
@@ -24,3 +26,4 @@ public:
   Pipeline() = default;
   virtual ~Pipeline() = default;
 };
+} // namespace alg

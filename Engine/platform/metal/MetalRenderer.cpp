@@ -11,6 +11,8 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
+namespace alg {
+
 MetalRenderer::MetalRenderer(GLFWwindow *glfw_window) {
   void *nswin_ptr = glfwGetCocoaWindow(glfw_window);
   internal_ptr = _renderer_init(nswin_ptr);
@@ -99,3 +101,4 @@ MetalRenderer::make_pipeline(PipelineDescriptor pipeline_desc) {
 
   return std::make_shared<MetalPipeline>(pipeline);
 }
+} // namespace alg

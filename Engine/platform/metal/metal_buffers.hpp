@@ -2,6 +2,8 @@
 
 #include "renderer/buffers.hpp"
 
+namespace alg {
+
 class MetalBuffer : public Buffer {
 private:
   void *internal_ptr;
@@ -17,3 +19,4 @@ public:
 
   int get_size() const override;
 };
+} // namespace alg

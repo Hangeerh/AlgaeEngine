@@ -2,6 +2,8 @@
 
 #include "renderer/render_pipeline.hpp"
 
+namespace alg {
+
 class MetalPipeline : public Pipeline {
 private:
   void *internal_ptr;
@@ -13,3 +15,4 @@ public:
 
   void *get_metal_pipeline_ptr();
 };
+} // namespace alg

@@ -1,6 +1,8 @@
 #include "renderer.hpp"
 #include "platform/metal/MetalRenderer.hpp"
 
+namespace alg {
+
 Renderer::Renderer(GLFWwindow *glfw_window) {}
 Renderer::~Renderer() {}
 
@@ -12,3 +14,4 @@ Renderer *Renderer::create(GLFWwindow *glfw_window) {
     return nullptr;
   }
 }
+} // namespace alg

@@ -1,12 +1,11 @@
 #include "Engine.hpp"
-#include "renderer/buffers.hpp"
 #include "renderer/render_pipeline.hpp"
 #include "renderer/renderer.hpp"
 #include "renderer/vertex_array.hpp"
 #include <GLFW/glfw3.h>
 #include <memory>
 
-namespace Engine {
+namespace alg {
 
 CoreApplication::CoreApplication(CoreApplicationSpec appSpec) {
   this->appSpec = appSpec;
@@ -58,4 +57,4 @@ void CoreApplication::run() {
   }
 }
 
-}; // namespace Engine
+} // namespace alg

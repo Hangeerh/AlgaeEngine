@@ -2,6 +2,8 @@
 
 #include <cstddef>
 
+namespace alg {
+
 class Buffer {
 public:
   Buffer() = default;
@@ -11,3 +13,4 @@ public:
 
   virtual int get_size() const = 0;
 };
+} // namespace alg

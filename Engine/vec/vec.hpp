@@ -1,5 +1,7 @@
 #pragma once
 
+namespace alg {
+
 class vec4f {
 public:
   float x;
@@ -12,3 +14,5 @@ public:
   vec4f(float f);
   vec4f(float x, float y, float z, float w);
 };
+
+} // namespace alg

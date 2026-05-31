@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <memory>
 
+namespace alg {
+
 class VertexArray {
 protected:
   std::shared_ptr<Buffer> vertex_buffer;
@@ -25,3 +27,4 @@ public:
 
   uint32_t get_index_count() const;
 };
+} // namespace alg

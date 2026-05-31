@@ -2,6 +2,8 @@
 
 #include "renderer/shader.hpp"
 
+namespace alg {
+
 class MetalShader : public Shader {
   friend class MetalRenderer;
 
@@ -13,3 +15,5 @@ public:
   MetalShader();
   ~MetalShader();
 };
+
+} // namespace alg

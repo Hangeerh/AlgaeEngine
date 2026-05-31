@@ -2,6 +2,8 @@
 #include "renderer/renderer.hpp"
 #include <GLFW/glfw3.h>
 
+namespace alg {
+
 // Wrapper around swift renderer backend
 class MetalRenderer : public Renderer {
 private:
@@ -30,3 +32,4 @@ public:
   std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) override;
 };
+} // namespace alg

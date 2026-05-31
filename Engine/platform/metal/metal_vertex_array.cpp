@@ -1,6 +1,8 @@
 #include "platform/metal/metal_vertex_array.hpp"
 #include <sys/types.h>
 
+namespace alg {
+
 MetalVertexArray::~MetalVertexArray() = default;
 
 void MetalVertexArray::set_vertex_buffer(
@@ -13,3 +15,5 @@ void MetalVertexArray::set_index_buffer(
   this->index_buffer = index_buffer;
   this->index_count = index_count;
 }
+
+} // namespace alg

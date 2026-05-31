@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <memory>
 
+namespace alg {
+
 class Renderer {
 public:
   enum class Platform {
@@ -44,3 +46,4 @@ public:
   static Renderer *create(GLFWwindow *glfw_window);
   static Platform get_platform() { return platform; }
 };
+} // namespace alg
