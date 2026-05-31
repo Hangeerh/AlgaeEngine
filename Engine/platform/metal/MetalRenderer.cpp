@@ -70,14 +70,15 @@ MetalRenderer::make_vertex_array(const float *vertices, uint32_t vertex_size,
   return std::static_pointer_cast<VertexArray>(va);
 }
 
-Shader *MetalRenderer::make_shader(std::string vertex_function,
-                                   std::string fragment_function) {
+std::shared_ptr<Shader>
+MetalRenderer::make_shader(std::string vertex_function,
+                           std::string fragment_function) {
   void *fragment_shader =
       _renderer_make_shader(internal_ptr, fragment_function.c_str());
   void *vertex_shader =
       _renderer_make_shader(internal_ptr, vertex_function.c_str());
 
-  MetalShader *shader = new MetalShader();
+  auto shader = std::make_shared<MetalShader>();
   shader->fragment_function = fragment_shader;
   shader->vertex_function = vertex_shader;
 

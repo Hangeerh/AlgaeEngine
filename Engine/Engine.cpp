@@ -39,12 +39,13 @@ void CoreApplication::run() {
   std::shared_ptr<VertexArray> vertex_array = renderer->make_vertex_array(
       (const float *)&vertices, sizeof(vertices), indices, 3);
 
-  Shader *shader = renderer->make_shader("vertexMain", "fragmentMain");
+  std::shared_ptr<Shader> shader =
+      renderer->make_shader("vertexMain", "fragmentMain");
 
   PipelineDescriptor pipeline_desc;
   pipeline_desc.vertex_format = VertexFormat::Float3;
   pipeline_desc.stride = sizeof(float) * 3;
-  pipeline_desc.shader = std::shared_ptr<Shader>(shader);
+  pipeline_desc.shader = shader;
 
   std::shared_ptr<Pipeline> pipeline = renderer->make_pipeline(pipeline_desc);
 

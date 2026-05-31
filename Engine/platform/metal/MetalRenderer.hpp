@@ -24,8 +24,8 @@ public:
                                                  const uint32_t *indices,
                                                  uint32_t index_count) override;
 
-  Shader *make_shader(std::string vertex_function,
-                      std::string fragment_function) override;
+  std::shared_ptr<Shader> make_shader(std::string vertex_function,
+                                      std::string fragment_function) override;
 
   std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) override;
