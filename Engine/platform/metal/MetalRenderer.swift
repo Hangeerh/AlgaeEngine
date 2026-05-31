@@ -21,7 +21,7 @@ func bridge_metal_layer(nswin_ptr: UnsafeMutableRawPointer) -> CAMetalLayer {
 class Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
-    private let pipelineState: MTLRenderPipelineState
+    private var pipelineState: MTLRenderPipelineState
     private let pixelFormat: MTLPixelFormat
     private let clearColor: MTLClearColor
     private let layer: CAMetalLayer
@@ -85,6 +85,10 @@ class Renderer {
             self.commandBuffer = self.commandQueue.makeCommandBuffer()
             self.commandBuffer!.label = "Command Buffer"
         }
+    }
+
+    public func bind_pipeline(pipeline: MTLRenderPipelineState) {
+        self.pipelineState = pipeline
     }
 
     // Currently we cannot submit the shader yet.

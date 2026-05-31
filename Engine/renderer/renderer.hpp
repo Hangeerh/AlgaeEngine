@@ -21,7 +21,7 @@ public:
   virtual ~Renderer() = 0;
 
   virtual void begin_scene() = 0;
-  virtual void bind_pipeline(std::shared_ptr<Pipeline> pipeline);
+  virtual void bind_pipeline(std::shared_ptr<Pipeline> pipeline) = 0;
   // TODO: Add transforms
   virtual void submit(const Shader *shader,
                       std::shared_ptr<VertexArray> vertex_array) = 0;

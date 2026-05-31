@@ -11,6 +11,7 @@ public:
   MetalRenderer(GLFWwindow *glfw_window);
   ~MetalRenderer();
   void begin_scene() override;
+  void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;
   void submit(const Shader *shader,
               std::shared_ptr<VertexArray> vertex_array) override;
   void end_scene() override;

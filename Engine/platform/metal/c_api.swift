@@ -24,6 +24,20 @@ func renderer_begin_scene(renderer: UnsafeMutableRawPointer) {
     renderer.begin_scene()
 }
 
+@_cdecl("_renderer_bind_pipeline")
+func renderer_bind_pipeline(
+    renderer: UnsafeMutableRawPointer,
+    pipeline: UnsafeMutableRawPointer
+) {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    let pipeline = Unmanaged<MTLRenderPipelineState>.fromOpaque(pipeline)
+        .takeUnretainedValue()
+
+    renderer.bind_pipeline(pipeline: pipeline)
+}
+
 @_cdecl("_renderer_submit")
 func renderer_submit(
     renderer: UnsafeMutableRawPointer,

@@ -14,6 +14,8 @@ void _renderer_deinit(void *swift_renderer_ptr);
 
 void _renderer_begin_scene(void *swift_renderer_ptr);
 
+void _renderer_bind_pipeline(void *swift_renderer_ptr, void *pipeline);
+
 void _renderer_submit(void *swift_renderer_ptr, void *vertex_shader,
                       void *fragment_shader, void *vertex_buffer,
                       void *index_buffer, uint32_t index_count);

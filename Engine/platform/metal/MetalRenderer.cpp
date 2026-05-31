@@ -20,6 +20,12 @@ MetalRenderer::~MetalRenderer() { _renderer_deinit(internal_ptr); }
 
 void MetalRenderer::begin_scene() { _renderer_begin_scene(internal_ptr); }
 
+void MetalRenderer::bind_pipeline(std::shared_ptr<Pipeline> pipeline) {
+  void *pipeline_ptr =
+      ((MetalPipeline *)pipeline.get())->get_metal_pipeline_ptr();
+  _renderer_bind_pipeline(internal_ptr, pipeline_ptr);
+}
+
 void MetalRenderer::submit(const Shader *shader,
                            std::shared_ptr<VertexArray> vertex_array) {
   void *vertex_shader = ((MetalShader *)shader)->vertex_function;
