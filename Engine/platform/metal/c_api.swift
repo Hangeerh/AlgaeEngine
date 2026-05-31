@@ -41,18 +41,11 @@ func renderer_bind_pipeline(
 @_cdecl("_renderer_submit")
 func renderer_submit(
     renderer: UnsafeMutableRawPointer,
-    vertex_shader: UnsafeMutableRawPointer,
-    fragment_shader: UnsafeMutableRawPointer,
     vertex_buffer: UnsafeMutableRawPointer,
     index_buffer: UnsafeMutableRawPointer,
     index_count: UInt32
 ) {
     let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
-        .takeUnretainedValue()
-
-    let vertex_shader = Unmanaged<MTLFunction>.fromOpaque(vertex_shader)
-        .takeUnretainedValue()
-    let fragment_shader = Unmanaged<MTLFunction>.fromOpaque(fragment_shader)
         .takeUnretainedValue()
 
     let vertex_buffer = Unmanaged<MTLBuffer>.fromOpaque(vertex_buffer)
@@ -61,8 +54,6 @@ func renderer_submit(
         .takeUnretainedValue()
 
     renderer.submit(
-        vertex_function: vertex_shader,
-        fragment_function: fragment_shader,
         vertex_buffer: vertex_buffer,
         index_buffer: index_buffer,
         index_count: index_count

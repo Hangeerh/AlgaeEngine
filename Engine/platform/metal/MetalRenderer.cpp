@@ -26,18 +26,13 @@ void MetalRenderer::bind_pipeline(std::shared_ptr<Pipeline> pipeline) {
   _renderer_bind_pipeline(internal_ptr, pipeline_ptr);
 }
 
-void MetalRenderer::submit(const Shader *shader,
-                           std::shared_ptr<VertexArray> vertex_array) {
-  void *vertex_shader = ((MetalShader *)shader)->vertex_function;
-  void *fragment_shader = ((MetalShader *)shader)->fragment_function;
-
+void MetalRenderer::submit(std::shared_ptr<VertexArray> vertex_array) {
   std::shared_ptr<MetalBuffer> vertex_buffer =
       std::static_pointer_cast<MetalBuffer>(vertex_array->get_vertex_buffer());
   std::shared_ptr<MetalBuffer> index_buffer =
       std::static_pointer_cast<MetalBuffer>(vertex_array->get_index_buffer());
 
-  _renderer_submit(internal_ptr, vertex_shader, fragment_shader,
-                   vertex_buffer->get_metal_buffer_ptr(),
+  _renderer_submit(internal_ptr, vertex_buffer->get_metal_buffer_ptr(),
                    index_buffer->get_metal_buffer_ptr(),
                    vertex_array->get_index_count());
 }
@@ -92,9 +87,9 @@ Shader *MetalRenderer::make_shader(std::string vertex_function,
 std::shared_ptr<Pipeline>
 MetalRenderer::make_pipeline(PipelineDescriptor pipeline_desc) {
   void *vertex_shader =
-      ((MetalShader *)pipeline_desc.vertex_function.get())->vertex_function;
+      ((MetalShader *)pipeline_desc.shader.get())->vertex_function;
   void *fragment_shader =
-      ((MetalShader *)pipeline_desc.fragment_function.get())->fragment_function;
+      ((MetalShader *)pipeline_desc.shader.get())->fragment_function;
 
   void *pipeline = _renderer_make_pipeline(
       internal_ptr, static_cast<uint32_t>(pipeline_desc.vertex_format),

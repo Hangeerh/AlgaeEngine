@@ -16,8 +16,7 @@ public:
   int buffer_index = 0;
   int stride = 0;
 
-  std::shared_ptr<Shader> vertex_function = nullptr;
-  std::shared_ptr<Shader> fragment_function = nullptr;
+  std::shared_ptr<Shader> shader = nullptr;
 };
 
 class Pipeline {

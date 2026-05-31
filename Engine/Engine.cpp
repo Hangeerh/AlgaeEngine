@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include "renderer/buffers.hpp"
+#include "renderer/render_pipeline.hpp"
 #include "renderer/renderer.hpp"
 #include "renderer/vertex_array.hpp"
 #include <GLFW/glfw3.h>
@@ -40,10 +41,18 @@ void CoreApplication::run() {
 
   Shader *shader = renderer->make_shader("vertexMain", "fragmentMain");
 
+  PipelineDescriptor pipeline_desc;
+  pipeline_desc.vertex_format = VertexFormat::Float3;
+  pipeline_desc.stride = sizeof(float) * 3;
+  pipeline_desc.shader = std::shared_ptr<Shader>(shader);
+
+  std::shared_ptr<Pipeline> pipeline = renderer->make_pipeline(pipeline_desc);
+
   while (!glfwWindowShouldClose(glfwWindow)) {
     glfwPollEvents();
     renderer->begin_scene();
-    renderer->submit(shader, vertex_array);
+    renderer->bind_pipeline(pipeline);
+    renderer->submit(vertex_array);
     renderer->end_scene();
   }
 }

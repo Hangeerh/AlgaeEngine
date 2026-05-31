@@ -23,8 +23,7 @@ public:
   virtual void begin_scene() = 0;
   virtual void bind_pipeline(std::shared_ptr<Pipeline> pipeline) = 0;
   // TODO: Add transforms
-  virtual void submit(const Shader *shader,
-                      std::shared_ptr<VertexArray> vertex_array) = 0;
+  virtual void submit(std::shared_ptr<VertexArray> vertex_array) = 0;
   virtual void end_scene() = 0;
 
   virtual void on_window_resize(uint32_t width, uint32_t height) = 0;

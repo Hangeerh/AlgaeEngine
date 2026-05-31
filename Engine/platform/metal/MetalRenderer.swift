@@ -21,7 +21,7 @@ func bridge_metal_layer(nswin_ptr: UnsafeMutableRawPointer) -> CAMetalLayer {
 class Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
-    private var pipelineState: MTLRenderPipelineState
+    private var pipelineState: MTLRenderPipelineState!
     private let pixelFormat: MTLPixelFormat
     private let clearColor: MTLClearColor
     private let layer: CAMetalLayer
@@ -52,31 +52,6 @@ class Renderer {
         self.clearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0)
 
         self.library = self.device.makeDefaultLibrary()!
-
-        let vertexMain = self.library.makeFunction(name: "vertexMain")
-        let fragmentMain = self.library.makeFunction(name: "fragmentMain")
-
-        let vertexDescriptor = MTLVertexDescriptor()
-        vertexDescriptor.attributes[0].format = .float3
-        vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.attributes[0].bufferIndex = 0
-        vertexDescriptor.layouts[0].stride = MemoryLayout<Float>.size * 3
-
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        pipelineDescriptor.vertexFunction = vertexMain
-        pipelineDescriptor.fragmentFunction = fragmentMain
-        pipelineDescriptor.colorAttachments[0].pixelFormat = self.pixelFormat
-        pipelineDescriptor.vertexDescriptor = vertexDescriptor
-
-        do {
-            let pipelineState = try self.device.makeRenderPipelineState(
-                descriptor: pipelineDescriptor
-            )
-            self.pipelineState = pipelineState
-        } catch {
-            print("Failed to create renderPipelineState: \(error)")
-            exit(-1)
-        }
     }
 
     public func begin_scene() {
@@ -91,11 +66,7 @@ class Renderer {
         self.pipelineState = pipeline
     }
 
-    // Currently we cannot submit the shader yet.
-    // Will figure out how to get it to work later.
     public func submit(
-        vertex_function: MTLFunction,
-        fragment_function: MTLFunction,
         vertex_buffer: MTLBuffer,
         index_buffer: MTLBuffer,
         index_count: UInt32
