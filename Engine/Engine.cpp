@@ -52,6 +52,7 @@ void CoreApplication::run() {
     glfwPollEvents();
     renderer->begin_scene();
     renderer->bind_pipeline(pipeline);
+    // TODO: Fix this bug
     renderer->submit(vertex_array);
     renderer->end_scene();
   }

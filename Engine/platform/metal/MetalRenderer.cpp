@@ -1,5 +1,6 @@
 #include "MetalRenderer.hpp"
 #include "./c_api.hpp"
+#include "math/math.hpp"
 #include "platform/metal/metal_buffers.hpp"
 #include "platform/metal/metal_render_pipeline.hpp"
 #include "platform/metal/metal_shader.hpp"
@@ -28,15 +29,19 @@ void MetalRenderer::bind_pipeline(std::shared_ptr<Pipeline> pipeline) {
   _renderer_bind_pipeline(internal_ptr, pipeline_ptr);
 }
 
-void MetalRenderer::submit(std::shared_ptr<VertexArray> vertex_array) {
+void MetalRenderer::submit(std::shared_ptr<VertexArray> vertex_array,
+                           std::shared_ptr<Buffer> uniforms) {
   std::shared_ptr<MetalBuffer> vertex_buffer =
       std::static_pointer_cast<MetalBuffer>(vertex_array->get_vertex_buffer());
   std::shared_ptr<MetalBuffer> index_buffer =
       std::static_pointer_cast<MetalBuffer>(vertex_array->get_index_buffer());
+  std::shared_ptr<MetalBuffer> uniform_buffer =
+      std::static_pointer_cast<MetalBuffer>(uniforms);
 
   _renderer_submit(internal_ptr, vertex_buffer->get_metal_buffer_ptr(),
                    index_buffer->get_metal_buffer_ptr(),
-                   vertex_array->get_index_count());
+                   vertex_array->get_index_count(),
+                   uniform_buffer->get_metal_buffer_ptr());
 }
 
 void MetalRenderer::end_scene() { _renderer_end_scene(internal_ptr); }

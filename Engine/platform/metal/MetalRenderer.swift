@@ -69,7 +69,8 @@ class Renderer {
     public func submit(
         vertex_buffer: MTLBuffer,
         index_buffer: MTLBuffer,
-        index_count: UInt32
+        index_count: UInt32,
+        uniform_buffer: MTLBuffer
     ) {
         autoreleasepool {
             self.renderPassDescriptor = MTLRenderPassDescriptor()
@@ -96,6 +97,12 @@ class Renderer {
                 vertex_buffer,
                 offset: 0,
                 index: 0
+            )
+
+            self.encoder?.setVertexBuffer(
+                uniform_buffer,
+                offset: 0,
+                index: 1
             )
 
             self.encoder?.drawIndexedPrimitives(

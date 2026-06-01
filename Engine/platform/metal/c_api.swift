@@ -43,7 +43,8 @@ func renderer_submit(
     renderer: UnsafeMutableRawPointer,
     vertex_buffer: UnsafeMutableRawPointer,
     index_buffer: UnsafeMutableRawPointer,
-    index_count: UInt32
+    index_count: UInt32,
+    uniform_buffer: UnsafeMutableRawPointer
 ) {
     let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
         .takeUnretainedValue()
@@ -52,11 +53,14 @@ func renderer_submit(
         .takeUnretainedValue()
     let index_buffer = Unmanaged<MTLBuffer>.fromOpaque(index_buffer)
         .takeUnretainedValue()
+    let uniform_buffer = Unmanaged<MTLBuffer>.fromOpaque(uniform_buffer)
+        .takeUnretainedValue()
 
     renderer.submit(
         vertex_buffer: vertex_buffer,
         index_buffer: index_buffer,
-        index_count: index_count
+        index_count: index_count,
+        uniform_buffer: uniform_buffer
     )
 }
 

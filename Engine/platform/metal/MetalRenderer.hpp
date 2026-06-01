@@ -14,7 +14,8 @@ public:
   ~MetalRenderer();
   void begin_scene() override;
   void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;
-  void submit(std::shared_ptr<VertexArray> vertex_array) override;
+  void submit(std::shared_ptr<VertexArray> vertex_array,
+              std::shared_ptr<Buffer> uniforms) override;
   void end_scene() override;
   void on_window_resize(uint32_t width, uint32_t height) override;
 
