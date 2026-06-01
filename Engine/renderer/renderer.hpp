@@ -1,5 +1,4 @@
 #pragma once
-#include "math/math.hpp"
 #include "renderer/buffers.hpp"
 #include "renderer/render_pipeline.hpp"
 #include "renderer/shader.hpp"
