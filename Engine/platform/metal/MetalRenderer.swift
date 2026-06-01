@@ -125,7 +125,12 @@ class Renderer {
         self.drawable = nil
     }
 
-    public func on_window_resize(width: UInt32, height: UInt32) {}
+    public func on_window_resize(width: UInt32, height: UInt32) {
+        self.layer.drawableSize = CGSize(
+            width: CGFloat(width),
+            height: CGFloat(height)
+        )
+    }
 
     public func make_buffer(size: Int) -> MTLBuffer {
         return self.device.makeBuffer(length: size)!

@@ -77,7 +77,12 @@ func renderer_on_window_resize(
     renderer: UnsafeMutableRawPointer,
     width: UInt32,
     height: UInt32
-) {}
+) {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    renderer.on_window_resize(width: width, height: height)
+}
 
 @_cdecl("_renderer_make_buffer")
 func renderer_make_buffer(renderer: UnsafeMutableRawPointer, size: Int)

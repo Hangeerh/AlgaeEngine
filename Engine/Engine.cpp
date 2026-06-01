@@ -70,8 +70,8 @@ void CoreApplication::run() {
   float height = static_cast<float>(this->appSpec.windowSpec.height);
   mat4 projection =
       mat4_perspective(3.14159f / 4.0f, width / height, 0.1f, 100.0f);
-  mat4 view = mat4_look_at({0.0f, 0.0f, 3.0f}, {0.0f, 0.0f, 0.0f},
-                           {0.0f, 1.0f, 0.0f});
+  mat4 view =
+      mat4_look_at({0.0f, 0.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
 
   while (!glfwWindowShouldClose(glfwWindow)) {
     glfwPollEvents();
