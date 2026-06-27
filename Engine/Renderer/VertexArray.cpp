@@ -1,4 +1,4 @@
-#include "renderer/vertex_array.hpp"
+#include "Renderer/VertexArray.hpp"
 
 namespace alg {
 

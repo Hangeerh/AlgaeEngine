@@ -1,4 +1,4 @@
-#include "platform/metal/metal_shader.hpp"
+#include "Platform/metal/MetalShader.hpp"
 #include "./c_api.hpp"
 
 namespace alg {

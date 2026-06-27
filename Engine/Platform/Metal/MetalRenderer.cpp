@@ -1,13 +1,11 @@
 #include "MetalRenderer.hpp"
 #include "./c_api.hpp"
-#include "math/math.hpp"
 #include "platform/metal/metal_buffers.hpp"
 #include "platform/metal/metal_render_pipeline.hpp"
 #include "platform/metal/metal_shader.hpp"
 #include "platform/metal/metal_vertex_array.hpp"
 #include <cstdint>
 #include <memory>
-#include <string>
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>

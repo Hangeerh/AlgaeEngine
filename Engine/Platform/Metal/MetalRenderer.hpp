@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer/renderer.hpp"
+#include "Renderer/Renderer.hpp"
 #include <GLFW/glfw3.h>
 
 namespace alg {

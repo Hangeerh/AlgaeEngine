@@ -1,4 +1,4 @@
-#include "platform/metal/metal_vertex_array.hpp"
+#include "Platform/metal/MetalVertexArray.hpp"
 #include <sys/types.h>
 
 namespace alg {

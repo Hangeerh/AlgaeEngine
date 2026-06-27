@@ -1,4 +1,4 @@
-#include "platform/metal/metal_render_pipeline.hpp"
+#include "Platform/metal/MetalRenderPipeline.hpp"
 #include "./c_api.hpp"
 
 namespace alg {

@@ -7,16 +7,16 @@ include(cmake/swift.cmake)
 add_library(AlgaeEngine 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/renderer/renderer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/renderer/buffers.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/renderer/shader.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/renderer/vertex_array.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Renderer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Buffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Shader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/VertexArray.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_buffers.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_render_pipeline.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_shader.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/metal_vertex_array.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalBuffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderPipeline.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalShader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalVertexArray.cpp
 )
 
 target_include_directories(AlgaeEngine PUBLIC 
