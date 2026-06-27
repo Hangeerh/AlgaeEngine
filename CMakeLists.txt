@@ -12,11 +12,11 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Shader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/VertexArray.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalBuffers.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderPipeline.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalShader.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalVertexArray.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderPipeline.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalShader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalVertexArray.cpp
 )
 
 target_include_directories(AlgaeEngine PUBLIC 

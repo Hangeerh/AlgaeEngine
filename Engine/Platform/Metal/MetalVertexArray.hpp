@@ -1,6 +1,6 @@
 #pragma once
 
-#include "platform/metal/MetalRenderer.hpp"
+#include "Platform/Metal/MetalRenderer.hpp"
 #include <cstdint>
 #include <memory>
 

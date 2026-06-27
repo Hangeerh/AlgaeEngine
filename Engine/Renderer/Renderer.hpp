@@ -3,7 +3,6 @@
 #include "Renderer/RenderPipeline.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/VertexArray.hpp"
-#include <GLFW/glfw3.h>
 #include <cstdint>
 #include <memory>
 
@@ -18,7 +17,7 @@ public:
 
   static const Platform platform = Platform::METAL;
 
-  Renderer(GLFWwindow *glfw_window);
+  Renderer(void *native_window);
   Renderer() = default;
   virtual ~Renderer() = 0;
 
@@ -43,7 +42,7 @@ public:
   virtual std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) = 0;
 
-  static Renderer *create(GLFWwindow *glfw_window);
+  static Renderer *create(void *native_window);
   static Platform get_platform() { return platform; }
 };
 } // namespace alg

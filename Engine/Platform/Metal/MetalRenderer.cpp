@@ -1,20 +1,17 @@
 #include "MetalRenderer.hpp"
+#include <string>
 #include "./c_api.hpp"
-#include "platform/metal/metal_buffers.hpp"
-#include "platform/metal/metal_render_pipeline.hpp"
-#include "platform/metal/metal_shader.hpp"
-#include "platform/metal/metal_vertex_array.hpp"
+#include "Platform/Metal/MetalBuffers.hpp"
+#include "Platform/Metal/MetalRenderPipeline.hpp"
+#include "Platform/Metal/MetalShader.hpp"
+#include "Platform/Metal/MetalVertexArray.hpp"
 #include <cstdint>
 #include <memory>
-#define GLFW_EXPOSE_NATIVE_COCOA
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
 
 namespace alg {
 
-MetalRenderer::MetalRenderer(GLFWwindow *glfw_window) {
-  void *nswin_ptr = glfwGetCocoaWindow(glfw_window);
-  internal_ptr = _renderer_init(nswin_ptr);
+MetalRenderer::MetalRenderer(void *native_window) {
+  internal_ptr = _renderer_init(native_window);
 }
 
 MetalRenderer::~MetalRenderer() { _renderer_deinit(internal_ptr); }

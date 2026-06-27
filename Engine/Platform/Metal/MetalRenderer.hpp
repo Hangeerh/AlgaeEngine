@@ -1,6 +1,5 @@
 #pragma once
 #include "Renderer/Renderer.hpp"
-#include <GLFW/glfw3.h>
 
 namespace alg {
 
@@ -10,7 +9,7 @@ private:
   void *internal_ptr;
 
 public:
-  MetalRenderer(GLFWwindow *glfw_window);
+  MetalRenderer(void* native_window);
   ~MetalRenderer();
   void begin_scene() override;
   void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;

@@ -1,10 +1,9 @@
 #include "Engine.hpp"
-#include "math/math.hpp"
-#include "renderer/buffers.hpp"
-#include "renderer/render_pipeline.hpp"
-#include "renderer/renderer.hpp"
-#include "renderer/vertex_array.hpp"
-#include <GLFW/glfw3.h>
+#include "Math/Math.hpp"
+#include "Renderer/Buffers.hpp"
+#include "Renderer/RenderPipeline.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Renderer/VertexArray.hpp"
 #include <memory>
 
 namespace alg {
@@ -13,7 +12,7 @@ struct Uniforms {
   mat4 mvp_matrix;
 };
 
-CoreApplication::CoreApplication(CoreApplicationSpec appSpec) {
+Application::Application(AppSpec appSpec) {
   this->appSpec = appSpec;
   const char *name = this->appSpec.name.c_str();
   glfwInit();
@@ -25,12 +24,12 @@ CoreApplication::CoreApplication(CoreApplicationSpec appSpec) {
   renderer = Renderer::create(glfwWindow);
 }
 
-CoreApplication::~CoreApplication() {
+Application::~Application() {
   delete renderer;
   glfwTerminate();
 }
 
-void CoreApplication::run() {
+void Application::run() {
   float vertices[] = {
       -0.5f, -0.5f, -0.5f, // 0
       0.5f,  -0.5f, -0.5f, // 1
