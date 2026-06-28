@@ -13,7 +13,6 @@ public:
     void* get_native_window() const;
     bool should_close() const;
     void poll_events() const;
-    void swap_buffers() const;
 
 private:
     void* native_handle;

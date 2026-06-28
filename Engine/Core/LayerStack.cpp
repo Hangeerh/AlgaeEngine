@@ -13,9 +13,13 @@ LayerStack::~LayerStack() {
 void LayerStack::push_layer(Layer *layer) {
   layers.emplace(layers.begin() + layer_insert_index, layer);
   layer_insert_index++;
+  layer->on_attach();
 }
 
-void LayerStack::push_overlay(Layer *overlay) { layers.emplace_back(overlay); }
+void LayerStack::push_overlay(Layer *overlay) {
+  layers.emplace_back(overlay);
+  overlay->on_attach();
+}
 
 void LayerStack::pop_layer(Layer *layer) {
   auto it =

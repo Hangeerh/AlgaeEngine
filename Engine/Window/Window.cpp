@@ -49,8 +49,4 @@ void Window::poll_events() const {
     glfwPollEvents();
 }
 
-void Window::swap_buffers() const {
-    glfwSwapBuffers(static_cast<GLFWwindow*>(native_handle));
-}
-
 } // namespace alg

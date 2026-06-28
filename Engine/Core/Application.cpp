@@ -29,7 +29,10 @@ void Application::run() {
 
   while (!window.should_close()) {
     window.poll_events();
-    window.swap_buffers();
+
+    for (Layer *layer : layer_stack) {
+      layer->on_render();
+    }
   }
 }
 
