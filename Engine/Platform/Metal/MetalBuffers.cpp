@@ -1,4 +1,4 @@
-#include "platform/metal/MetalBuffers.hpp"
+#include "Platform/Metal/MetalBuffers.hpp"
 #include "./c_api.hpp"
 
 namespace alg {

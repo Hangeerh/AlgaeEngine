@@ -2,7 +2,6 @@
 
 #include "Core/Layer.hpp"
 #include "Core/LayerStack.hpp"
-#include "Renderer/Renderer.hpp"
 #include <string>
 
 namespace alg {
@@ -38,7 +37,5 @@ private:
   LayerStack layer_stack;
 
   bool running = true;
-
-  Renderer *renderer;
 };
 } // namespace alg

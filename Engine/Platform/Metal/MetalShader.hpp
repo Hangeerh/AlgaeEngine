@@ -5,7 +5,7 @@
 namespace alg {
 
 class MetalShader : public Shader {
-  friend class MetalRenderer;
+  friend class MetalRenderAPI;
 
 private:
   void *vertex_function;

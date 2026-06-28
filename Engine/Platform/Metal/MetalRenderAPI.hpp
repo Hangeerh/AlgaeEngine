@@ -1,16 +1,16 @@
 #pragma once
-#include "Renderer/Renderer.hpp"
+#include "Renderer/RenderAPI.hpp"
 
 namespace alg {
 
 // Wrapper around swift renderer backend
-class MetalRenderer : public Renderer {
+class MetalRenderAPI : public RenderAPI {
 private:
   void *internal_ptr;
 
 public:
-  MetalRenderer(void* native_window);
-  ~MetalRenderer();
+  MetalRenderAPI(void* native_window);
+  ~MetalRenderAPI();
   void begin_scene() override;
   void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;
   void submit(std::shared_ptr<VertexArray> vertex_array,

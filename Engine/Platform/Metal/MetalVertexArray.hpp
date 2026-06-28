@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Platform/Metal/MetalRenderer.hpp"
+#include "Platform/Metal/MetalRenderAPI.hpp"
 #include <cstdint>
 #include <memory>
 
 namespace alg {
 
 class MetalVertexArray : public VertexArray {
-  friend class MetalRenderer;
+  friend class MetalRenderAPI;
 
 public:
   ~MetalVertexArray();

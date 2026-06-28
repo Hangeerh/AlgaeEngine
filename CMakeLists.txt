@@ -7,12 +7,13 @@ include(cmake/swift.cmake)
 add_library(AlgaeEngine 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/RenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Renderer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Buffers.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Shader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/VertexArray.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderPipeline.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalShader.cpp
