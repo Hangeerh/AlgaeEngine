@@ -19,7 +19,7 @@ struct AppSpec {
 
 class Application {
 public:
-  Application(AppSpec appSpec);
+  Application(AppSpec app_spec);
   virtual ~Application();
 
   void set_window(void *window);
