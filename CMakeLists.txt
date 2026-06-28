@@ -4,8 +4,14 @@ project(AlgaeEngine LANGUAGES CXX)
 
 include(cmake/swift.cmake)
 
+set(GLFW_BUILD_DOCS OFF)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glfw)
+
 add_library(AlgaeEngine 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Engine.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Application.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Layer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/LayerStack.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Window/Window.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/RenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Renderer.cpp
@@ -25,19 +31,21 @@ target_include_directories(AlgaeEngine PUBLIC
 )
 
 target_include_directories(AlgaeEngine PRIVATE
-  ${CMAKE_SOURCE_DIR}/thirdparty/glfw/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glfw/include
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine
 )
+
+target_link_libraries(AlgaeEngine PUBLIC glfw)
 
 if(APPLE)
   compile_swift_sources(AlgaeEngine
     MODULE_NAME EngineSwift
     SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/MetalRenderer.swift
-    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/platform/metal/c_api.swift
+    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderer.swift
+    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/c_api.swift
     COMPILE_FLAGS
       -Xcc -I${CMAKE_CURRENT_SOURCE_DIR}
-      -Xcc -I${CMAKE_SOURCE_DIR}/thirdparty/glfw/include
+      -Xcc -I${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glfw/include
   )
 
   target_link_swift_libraries(AlgaeEngine)

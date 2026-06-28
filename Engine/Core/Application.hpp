@@ -2,6 +2,8 @@
 
 #include "Core/Layer.hpp"
 #include "Core/LayerStack.hpp"
+#include "Event/Event.hpp"
+#include "Window/Window.hpp"
 #include <string>
 
 namespace alg {
@@ -21,7 +23,7 @@ public:
   Application(AppSpec app_spec);
   virtual ~Application();
 
-  void set_window(void *window);
+  void set_window(Window &window);
 
   void push_layer(Layer *layer);
   void push_overlay(Layer *layer);
