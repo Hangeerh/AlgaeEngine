@@ -5,15 +5,15 @@
 namespace alg {
 
 class MetalShader : public Shader {
-  friend class MetalRenderAPI;
-
 private:
-  void *vertex_function;
-  void *fragment_function;
+  void *function;
 
 public:
   MetalShader();
   ~MetalShader();
+
+  void set_internal_function(void *f);
+  void *get_internal_function();
 };
 
 } // namespace alg

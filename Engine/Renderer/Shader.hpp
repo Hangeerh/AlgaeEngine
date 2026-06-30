@@ -5,6 +5,6 @@ namespace alg {
 class Shader {
 public:
   Shader();
-  virtual ~Shader() = 0;
+  virtual ~Shader();
 };
 } // namespace alg

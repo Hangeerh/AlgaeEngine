@@ -26,8 +26,7 @@ std::shared_ptr<VertexArray>
 make_vertex_array(const float *vertices, uint32_t vertex_size,
                   const uint32_t *indices, uint32_t index_count);
 
-std::shared_ptr<Shader>
-make_shader(std::string vertex_function, std::string fragment_function);
+std::shared_ptr<Shader> make_shader(std::string function_name);
 
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc);
 

@@ -39,9 +39,8 @@ make_vertex_array(const float *vertices, uint32_t vertex_size,
   return s_api->make_vertex_array(vertices, vertex_size, indices, index_count);
 }
 
-std::shared_ptr<Shader>
-make_shader(std::string vertex_function, std::string fragment_function) {
-  return s_api->make_shader(vertex_function, fragment_function);
+std::shared_ptr<Shader> make_shader(std::string function_name) {
+  return s_api->make_shader(function_name);
 }
 
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc) {

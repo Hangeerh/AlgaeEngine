@@ -1,5 +1,4 @@
 #include "MetalRenderAPI.hpp"
-#include <string>
 #include "./c_api.hpp"
 #include "Platform/Metal/MetalBuffers.hpp"
 #include "Platform/Metal/MetalRenderPipeline.hpp"
@@ -7,6 +6,7 @@
 #include "Platform/Metal/MetalVertexArray.hpp"
 #include <cstdint>
 #include <memory>
+#include <string>
 
 namespace alg {
 
@@ -72,27 +72,21 @@ MetalRenderAPI::make_vertex_array(const float *vertices, uint32_t vertex_size,
   return std::static_pointer_cast<VertexArray>(va);
 }
 
-std::shared_ptr<Shader>
-MetalRenderAPI::make_shader(std::string vertex_function,
-                            std::string fragment_function) {
-  void *fragment_shader =
-      _renderer_make_shader(internal_ptr, fragment_function.c_str());
-  void *vertex_shader =
-      _renderer_make_shader(internal_ptr, vertex_function.c_str());
+std::shared_ptr<Shader> MetalRenderAPI::make_shader(std::string function_name) {
+  void *shader_ptr = _renderer_make_shader(internal_ptr, function_name.c_str());
 
   auto shader = std::make_shared<MetalShader>();
-  shader->fragment_function = fragment_shader;
-  shader->vertex_function = vertex_shader;
+  shader->set_internal_function(shader_ptr);
 
   return shader;
 }
 
 std::shared_ptr<Pipeline>
 MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
-  void *vertex_shader =
-      ((MetalShader *)pipeline_desc.shader.get())->vertex_function;
-  void *fragment_shader =
-      ((MetalShader *)pipeline_desc.shader.get())->fragment_function;
+  void *vertex_shader = ((MetalShader *)pipeline_desc.vertex_shader.get())
+                            ->get_internal_function();
+  void *fragment_shader = ((MetalShader *)pipeline_desc.fragment_shader.get())
+                              ->get_internal_function();
 
   void *pipeline = _renderer_make_pipeline(
       internal_ptr, static_cast<uint32_t>(pipeline_desc.vertex_format),

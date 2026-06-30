@@ -37,8 +37,7 @@ public:
   make_vertex_array(const float *vertices, uint32_t vertex_size,
                     const uint32_t *indices, uint32_t index_count) = 0;
 
-  virtual std::shared_ptr<Shader>
-  make_shader(std::string vertex_function, std::string fragment_function) = 0;
+  virtual std::shared_ptr<Shader> make_shader(std::string function_name) = 0;
 
   virtual std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) = 0;

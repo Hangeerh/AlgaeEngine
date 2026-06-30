@@ -3,14 +3,11 @@
 
 namespace alg {
 
-MetalShader::MetalShader() {
-  vertex_function = nullptr;
-  fragment_function = nullptr;
-}
+MetalShader::MetalShader() { function = nullptr; }
 
-MetalShader::~MetalShader() {
-  _free_metal_shader(vertex_function);
-  _free_metal_shader(fragment_function);
-}
+MetalShader::~MetalShader() { _free_metal_shader(function); }
+
+void MetalShader::set_internal_function(void *f) { function = f; }
+void *MetalShader::get_internal_function() { return function; }
 
 } // namespace alg
