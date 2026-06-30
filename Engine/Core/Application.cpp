@@ -5,12 +5,16 @@
 
 namespace alg {
 
-Application::Application(AppSpec app_spec) : app_spec(app_spec) {}
+Application::Application(AppSpec app_spec) : app_spec(app_spec) {
+  window = new Window(app_spec.name, app_spec.window_spec.width,
+                      app_spec.window_spec.height);
+  set_window(window);
+}
 
 Application::~Application() { Renderer::shutdown(); }
 
-void Application::set_window(Window &window) {
-  native_window = window.get_native_window();
+void Application::set_window(Window *window) {
+  native_window = window->get_native_window();
   assert(native_window != nullptr);
   Renderer::init(native_window);
 }
@@ -22,13 +26,8 @@ void Application::push_overlay(Layer *overlay) {
 }
 
 void Application::run() {
-  Window window(app_spec.name, app_spec.window_spec.width,
-                app_spec.window_spec.height);
-
-  set_window(window);
-
-  while (!window.should_close()) {
-    window.poll_events();
+  while (!window->should_close()) {
+    window->poll_events();
 
     for (Layer *layer : layer_stack) {
       layer->on_render();

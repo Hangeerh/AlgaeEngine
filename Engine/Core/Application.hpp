@@ -23,17 +23,19 @@ public:
   Application(AppSpec app_spec);
   virtual ~Application();
 
-  void set_window(Window &window);
+  void set_window(Window *window);
+
+  void on_event(Event &e);
 
   void push_layer(Layer *layer);
   void push_overlay(Layer *layer);
-
-  void on_event(Event &e);
 
   void run();
 
 private:
   AppSpec app_spec;
+
+  Window *window;
 
   void *native_window = nullptr;
   LayerStack layer_stack;
