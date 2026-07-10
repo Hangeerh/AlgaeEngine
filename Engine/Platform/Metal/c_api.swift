@@ -161,7 +161,53 @@ func renderer_make_pipeline(
     let format: MTLVertexFormat
     switch vertex_format {
     case 0:
+        format = .float
+    case 1:
+        format = .float2
+    case 2:
         format = .float3
+    case 3:
+        format = .float4
+    case 4:
+        format = .int
+    case 5:
+        format = .int2
+    case 6:
+        format = .int3
+    case 7:
+        format = .int4
+    case 8:
+        format = .uint
+    case 9:
+        format = .uint2
+    case 10:
+        format = .uint3
+    case 11:
+        format = .uint4
+    case 12:
+        format = .half
+    case 13:
+        format = .half2
+    case 14:
+        format = .half3
+    case 15:
+        format = .half4
+    case 16:
+        format = .short
+    case 17:
+        format = .short2
+    case 18:
+        format = .short3
+    case 19:
+        format = .short4
+    case 20:
+        format = .ushort
+    case 21:
+        format = .ushort2
+    case 22:
+        format = .ushort3
+    case 23:
+        format = .ushort4
     default:
         format = .float3
     }
