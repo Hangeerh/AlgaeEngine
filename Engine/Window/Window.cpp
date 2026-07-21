@@ -17,7 +17,8 @@ Window::Window(const std::string& title, uint32_t width, uint32_t height)
         glfwInit();
         glfw_initialized = true;
     }
-
+    
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     native_handle = glfwCreateWindow(
         static_cast<int>(width),
         static_cast<int>(height),
