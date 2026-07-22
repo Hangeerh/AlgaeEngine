@@ -11,7 +11,7 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Application.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Layer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/LayerStack.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Window/Window.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Window.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/RenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Renderer.cpp
@@ -24,6 +24,8 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderPipeline.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalShader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalVertexArray.cpp
+
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/macOS/MacWindow.cpp
 )
 
 target_include_directories(AlgaeEngine PUBLIC 

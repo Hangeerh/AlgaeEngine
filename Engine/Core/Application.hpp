@@ -3,18 +3,11 @@
 #include "Core/Layer.hpp"
 #include "Core/LayerStack.hpp"
 #include "Event/Event.hpp"
-#include "Window/Window.hpp"
-#include <string>
+#include "Core/Window.hpp"
 
 namespace alg {
 
-struct WindowSpec {
-  int height = 600;
-  int width = 800;
-};
-
 struct AppSpec {
-  std::string name = std::string("Application");
   WindowSpec window_spec;
 };
 
@@ -23,7 +16,7 @@ public:
   Application(AppSpec app_spec);
   virtual ~Application();
 
-  void set_window(Window *window);
+  void set_window(std::shared_ptr<Window> window);
 
   void on_event(Event &e);
 
@@ -35,7 +28,7 @@ public:
 private:
   AppSpec app_spec;
 
-  Window *window;
+  std::shared_ptr<Window> window;
 
   void *native_window = nullptr;
   LayerStack layer_stack;

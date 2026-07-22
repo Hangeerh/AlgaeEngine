@@ -14,6 +14,13 @@ public:
       : width(width), height(height) {}
 };
 
+class WindowCloseEvent : public Event {
+public:
+  EVENT_CLASS_TYPE(WindowClose);
+
+  WindowCloseEvent() = default;
+};
+
 class AppRenderEvent : public Event {
 public:
   EVENT_CLASS_TYPE(AppRender)
