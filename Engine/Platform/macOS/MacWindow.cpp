@@ -1,6 +1,7 @@
 #include "Platform/macOS/MacWindow.hpp"
 #include "Core/Window.hpp"
 #include "Event/ApplicationEvent.hpp"
+#include "Event/KeyEvent.hpp"
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
 #include <iostream>
@@ -40,7 +41,24 @@ MacWindow::MacWindow(WindowSpec win_spec) {
   glfwSetKeyCallback(native_handle, [](GLFWwindow *window, int key,
                                        int scancode, int action, int mods) {
     WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
-    // Unfinished
+
+    switch (action) {
+    case GLFW_PRESS: {
+      KeyPressedEvent e(key);
+      data.event_callback(e);
+      break;
+    }
+    case GLFW_REPEAT: {
+      KeyPressedEvent e(key, true);
+      data.event_callback(e);
+      break;
+    }
+    case GLFW_RELEASE: {
+      KeyReleasedEvent e(key);
+      data.event_callback(e);
+      break;
+    }
+    }
   });
 
   glfwMakeContextCurrent(native_handle);

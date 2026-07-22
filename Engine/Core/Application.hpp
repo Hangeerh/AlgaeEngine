@@ -2,8 +2,9 @@
 
 #include "Core/Layer.hpp"
 #include "Core/LayerStack.hpp"
-#include "Event/Event.hpp"
 #include "Core/Window.hpp"
+#include "Event/ApplicationEvent.hpp"
+#include "Event/Event.hpp"
 
 namespace alg {
 
@@ -19,6 +20,8 @@ public:
   void set_window(std::shared_ptr<Window> window);
 
   void on_event(Event &e);
+  bool on_window_resize(WindowResizeEvent &e);
+  bool on_window_close(WindowCloseEvent &e);
 
   void push_layer(Layer *layer);
   void push_overlay(Layer *layer);
