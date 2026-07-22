@@ -9,7 +9,7 @@ class KeyEvent : public Event {
 public:
   KeyCode get_key_code() const { return key_code; }
 
-  EVENT_CLASS_CATEGORY(Keyboard | Input);
+  EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput);
 
 protected:
   KeyEvent(const KeyCode keycode) : key_code(keycode) {}

@@ -2,9 +2,9 @@
 #include "Core/Window.hpp"
 #include "Event/ApplicationEvent.hpp"
 #include "Event/KeyEvent.hpp"
+#include "Event/MouseEvent.hpp"
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
-#include <iostream>
 
 namespace alg {
 
@@ -60,6 +60,40 @@ MacWindow::MacWindow(WindowSpec win_spec) {
     }
     }
   });
+
+  glfwSetMouseButtonCallback(
+      native_handle, [](GLFWwindow *window, int button, int action, int mods) {
+        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+
+        switch (action) {
+        case GLFW_PRESS: {
+          MouseButtonPressedEvent e(button);
+          data.event_callback(e);
+          break;
+        }
+        case GLFW_RELEASE: {
+          MouseButtonReleasedEvent e(button);
+          data.event_callback(e);
+          break;
+        }
+        }
+      });
+
+  glfwSetScrollCallback(
+      native_handle, [](GLFWwindow *window, double offset_x, double offset_y) {
+        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+
+        MouseScrolledEvent e((float)offset_x, (float)offset_y);
+        data.event_callback(e);
+      });
+
+  glfwSetCursorPosCallback(
+      native_handle, [](GLFWwindow *window, double x, double y) {
+        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+
+        MouseScrolledEvent e((float)x, (float)y);
+        data.event_callback(e);
+      });
 
   glfwMakeContextCurrent(native_handle);
 }

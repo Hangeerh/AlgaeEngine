@@ -6,7 +6,7 @@ namespace alg {
 
 class WindowResizeEvent : public Event {
 public:
-  EVENT_CLASS_CATEGORY(Application)
+  EVENT_CLASS_CATEGORY(EventCategoryApplication)
   EVENT_CLASS_TYPE(WindowResize)
 
   unsigned int width, height;
@@ -17,7 +17,7 @@ public:
 
 class WindowCloseEvent : public Event {
 public:
-  EVENT_CLASS_CATEGORY(Application)
+  EVENT_CLASS_CATEGORY(EventCategoryApplication)
   EVENT_CLASS_TYPE(WindowClose);
 
   WindowCloseEvent() = default;
@@ -25,7 +25,7 @@ public:
 
 class AppRenderEvent : public Event {
 public:
-  EVENT_CLASS_CATEGORY(Application)
+  EVENT_CLASS_CATEGORY(EventCategoryApplication)
   EVENT_CLASS_TYPE(AppRender)
 
   AppRenderEvent() = default;

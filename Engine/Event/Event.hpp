@@ -19,11 +19,12 @@ enum class EventType {
 };
 
 enum EventCategory {
-  None = 0,
-  Application = 1 << 0,
-  Input = 1 << 1,
-  Keyboard = 1 << 2,
-  Mouse = 1 << 3
+  EventCategoryNone = 0,
+  EventCategoryApplication = 1 << 0,
+  EventCategoryInput = 1 << 1,
+  EventCategoryKeyboard = 1 << 2,
+  EventCategoryMouse = 1 << 3,
+  EventCategoryMouseButton = 1 << 4,
 };
 
 class Event {
