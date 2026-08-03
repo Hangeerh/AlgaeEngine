@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Event/Event.hpp"
+#include "Algae/Event/Event.hpp"
 #include <functional>
 #include <string>
 

@@ -1,5 +1,5 @@
-#include "Core/LayerStack.hpp"
-#include "Core/Layer.hpp"
+#include "Algae/Core/LayerStack.hpp"
+#include "Algae/Core/Layer.hpp"
 
 namespace alg {
 

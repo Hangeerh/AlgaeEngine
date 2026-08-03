@@ -1,8 +1,8 @@
-#include "Core/Application.hpp"
-#include "Core/Window.hpp"
-#include "Event/ApplicationEvent.hpp"
-#include "Event/Event.hpp"
-#include "Renderer/Renderer.hpp"
+#include "Algae/Core/Application.hpp"
+#include "Algae/Core/Window.hpp"
+#include "Algae/Event/ApplicationEvent.hpp"
+#include "Algae/Event/Event.hpp"
+#include "Algae/Renderer/Renderer.hpp"
 #include <cassert>
 #include <memory>
 

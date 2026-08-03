@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Core/Layer.hpp"
-#include "Core/LayerStack.hpp"
-#include "Core/Window.hpp"
-#include "Event/ApplicationEvent.hpp"
-#include "Event/Event.hpp"
+#include "Algae/Core/Layer.hpp"
+#include "Algae/Core/LayerStack.hpp"
+#include "Algae/Core/Window.hpp"
+#include "Algae/Event/ApplicationEvent.hpp"
+#include "Algae/Event/Event.hpp"
 
 namespace alg {
 

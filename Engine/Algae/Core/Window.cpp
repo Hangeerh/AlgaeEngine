@@ -1,4 +1,4 @@
-#include "Core/Window.hpp"
+#include "Algae/Core/Window.hpp"
 #include "Platform/macOS/MacWindow.hpp"
 
 namespace alg {

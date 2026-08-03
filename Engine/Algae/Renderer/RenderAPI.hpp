@@ -1,8 +1,8 @@
 #pragma once
-#include "Renderer/Buffers.hpp"
-#include "Renderer/RenderPipeline.hpp"
-#include "Renderer/Shader.hpp"
-#include "Renderer/VertexArray.hpp"
+#include "Algae/Renderer/Buffers.hpp"
+#include "Algae/Renderer/RenderPipeline.hpp"
+#include "Algae/Renderer/Shader.hpp"
+#include "Algae/Renderer/VertexArray.hpp"
 #include <cstdint>
 #include <memory>
 #include <string>

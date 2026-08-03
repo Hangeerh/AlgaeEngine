@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/RenderPipeline.hpp"
+#include "Algae/Renderer/RenderPipeline.hpp"
 
 namespace alg {
 

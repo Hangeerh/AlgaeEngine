@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.16)
 project(AlgaeEngine LANGUAGES CXX)
 
@@ -8,16 +7,16 @@ set(GLFW_BUILD_DOCS OFF)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glfw)
 
 add_library(AlgaeEngine 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Application.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Layer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/LayerStack.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Core/Window.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Core/Application.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Core/Layer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Core/LayerStack.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Core/Window.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/RenderAPI.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Renderer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Buffers.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/Shader.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Renderer/VertexArray.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/RenderAPI.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/Renderer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/Buffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/Shader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/VertexArray.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp

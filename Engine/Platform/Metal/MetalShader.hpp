@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Shader.hpp"
+#include "Algae/Renderer/Shader.hpp"
 
 namespace alg {
 

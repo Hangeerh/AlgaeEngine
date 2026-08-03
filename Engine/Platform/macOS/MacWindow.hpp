@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Window.hpp"
+#include "Algae/Core/Window.hpp"
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include <GLFW/glfw3native.h>

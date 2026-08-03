@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core/KeyCode.hpp"
-#include "Event/Event.hpp"
+#include "Algae/Core/KeyCode.hpp"
+#include "Algae/Event/Event.hpp"
 
 namespace alg {
 

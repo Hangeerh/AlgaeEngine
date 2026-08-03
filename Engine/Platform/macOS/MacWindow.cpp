@@ -1,8 +1,8 @@
 #include "Platform/macOS/MacWindow.hpp"
-#include "Core/Window.hpp"
-#include "Event/ApplicationEvent.hpp"
-#include "Event/KeyEvent.hpp"
-#include "Event/MouseEvent.hpp"
+#include "Algae/Core/Window.hpp"
+#include "Algae/Event/ApplicationEvent.hpp"
+#include "Algae/Event/KeyEvent.hpp"
+#include "Algae/Event/MouseEvent.hpp"
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
 

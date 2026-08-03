@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffers.hpp"
+#include "Algae/Renderer/Buffers.hpp"
 
 namespace alg {
 

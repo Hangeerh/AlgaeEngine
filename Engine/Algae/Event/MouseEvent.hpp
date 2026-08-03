@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core/MouseCode.hpp"
-#include "Event/Event.hpp"
+#include "Algae/Core/MouseCode.hpp"
+#include "Algae/Event/Event.hpp"
 
 namespace alg {
 

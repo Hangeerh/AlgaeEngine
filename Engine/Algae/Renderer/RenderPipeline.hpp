@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer/Shader.hpp"
+#include "Algae/Renderer/Shader.hpp"
 #include <memory>
 
 namespace alg {
