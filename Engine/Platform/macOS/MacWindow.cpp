@@ -118,4 +118,8 @@ void MacWindow::set_event_callback_fn(EventCallbackFn fn) {
 }
 
 void MacWindow::on_update() { glfwPollEvents(); }
+
+uint32_t MacWindow::get_height() const { return data.height; }
+
+uint32_t MacWindow::get_width() const { return data.width; }
 } // namespace alg

@@ -10,7 +10,11 @@
 
 namespace alg {
 
-MetalRenderAPI::MetalRenderAPI(void *native_window) {
+MetalRenderAPI::MetalRenderAPI(std::shared_ptr<Window> window) {
+  drawable_height = window->get_height();
+  drawable_width = window->get_width();
+
+  void *native_window = window->get_native_window();
   internal_ptr = _renderer_init(native_window);
 }
 
@@ -42,6 +46,8 @@ void MetalRenderAPI::submit(std::shared_ptr<VertexArray> vertex_array,
 void MetalRenderAPI::end_scene() { _renderer_end_scene(internal_ptr); }
 
 void MetalRenderAPI::on_window_resize(uint32_t width, uint32_t height) {
+  drawable_height = height;
+  drawable_width = width;
   _renderer_on_window_resize(internal_ptr, width, height);
 }
 
@@ -95,4 +101,8 @@ MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
 
   return std::make_shared<MetalPipeline>(pipeline);
 }
+
+uint32_t MetalRenderAPI::get_drawable_height() const { return drawable_height; }
+
+uint32_t MetalRenderAPI::get_drawable_width() const { return drawable_width; }
 } // namespace alg

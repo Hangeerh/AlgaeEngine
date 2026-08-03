@@ -1,5 +1,6 @@
 #pragma once
 #include "Algae/Renderer/RenderAPI.hpp"
+#include "Algae/Core/Window.hpp"
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -8,7 +9,7 @@ namespace alg {
 
 namespace Renderer {
 
-void init(void *native_window);
+void init(std::shared_ptr<Window> window);
 void shutdown();
 
 void begin_scene();
@@ -29,6 +30,9 @@ make_vertex_array(const float *vertices, uint32_t vertex_size,
 std::shared_ptr<Shader> make_shader(std::string function_name);
 
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc);
+
+uint32_t get_drawable_height();
+uint32_t get_drawable_width();
 
 RenderAPI::Platform get_platform();
 

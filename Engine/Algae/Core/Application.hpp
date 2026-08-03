@@ -33,7 +33,6 @@ private:
 
   std::shared_ptr<Window> window;
 
-  void *native_window = nullptr;
   LayerStack layer_stack;
 
   bool running = true;

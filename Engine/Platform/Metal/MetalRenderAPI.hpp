@@ -1,5 +1,7 @@
 #pragma once
 #include "Algae/Renderer/RenderAPI.hpp"
+#include <cstdint>
+#include <memory>
 
 namespace alg {
 
@@ -7,9 +9,11 @@ namespace alg {
 class MetalRenderAPI : public RenderAPI {
 private:
   void *internal_ptr;
+  uint32_t drawable_height;
+  uint32_t drawable_width;
 
 public:
-  MetalRenderAPI(void* native_window);
+  MetalRenderAPI(std::shared_ptr<Window> window);
   ~MetalRenderAPI();
   void begin_scene() override;
   void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;
@@ -30,5 +34,8 @@ public:
 
   std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) override;
+
+  uint32_t get_drawable_height() const override;
+  uint32_t get_drawable_width() const override;
 };
 } // namespace alg

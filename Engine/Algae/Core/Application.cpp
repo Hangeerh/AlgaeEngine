@@ -18,9 +18,7 @@ Application::Application(AppSpec app_spec) : app_spec(app_spec) {
 Application::~Application() { Renderer::shutdown(); }
 
 void Application::set_window(std::shared_ptr<Window> window) {
-  native_window = window->get_native_window();
-  assert(native_window != nullptr);
-  Renderer::init(native_window);
+  Renderer::init(window);
 }
 
 void Application::on_event(Event &e) {

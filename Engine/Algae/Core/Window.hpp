@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Algae/Event/Event.hpp"
+#include <cstdint>
 #include <functional>
 #include <string>
 
@@ -24,6 +25,9 @@ public:
   virtual void set_event_callback_fn(EventCallbackFn fn) = 0;
 
   virtual void on_update() = 0;
+
+  virtual uint32_t get_height() const = 0;
+  virtual uint32_t get_width() const = 0;
 
   static std::shared_ptr<Window> create(WindowSpec win_spec);
 };

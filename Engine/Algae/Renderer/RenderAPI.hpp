@@ -1,4 +1,5 @@
 #pragma once
+#include "Algae/Core/Window.hpp"
 #include "Algae/Renderer/Buffers.hpp"
 #include "Algae/Renderer/RenderPipeline.hpp"
 #include "Algae/Renderer/Shader.hpp"
@@ -18,7 +19,7 @@ public:
 
   static const Platform platform = Platform::METAL;
 
-  RenderAPI(void *native_window);
+  RenderAPI(std::shared_ptr<Window> window);
   RenderAPI() = default;
   virtual ~RenderAPI() = 0;
 
@@ -42,7 +43,10 @@ public:
   virtual std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) = 0;
 
-  static RenderAPI *create(void *native_window);
+  virtual uint32_t get_drawable_height() const = 0;
+  virtual uint32_t get_drawable_width() const = 0;
+
+  static RenderAPI *create(std::shared_ptr<Window> window);
   static Platform get_platform() { return platform; }
 };
 } // namespace alg
