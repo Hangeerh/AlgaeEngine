@@ -32,9 +32,27 @@ void *_renderer_make_buffer_bytes(void *swift_renderer_ptr, const void *bytes,
 
 void *_renderer_make_shader(void *swift_renderer_ptr, const char *shader_name);
 
-void *_renderer_make_pipeline(void *swift_renderer_ptr, uint32_t vertex_format,
-                              int offset, int buffer_index, int stride,
-                              void *vertex_shader, void *fragment_shader);
+void *_renderer_make_pipeline(void *swift_renderer_ptr,
+                              void *pipeline_descriptor);
+
+//
+// Pipeline building
+//
+
+void *_pipeline_desc_init();
+void _pipeline_desc_set_vertex_function(void *pipeline, void *vertex_function);
+void _pipeline_desc_set_fragment_function(void *pipeline,
+                                          void *fragment_function);
+void _pipeline_desc_set_vertex_desc(void *pipeline, void *vertex_desc);
+
+void *_vertex_desc_init();
+void _vertex_desc_set_attribute(void *desc, int index, int format, int offset,
+                                int buffer_index);
+void _vertex_desc_set_layout(void *desc, int index, int step_function,
+                             int step_rate, int stride);
+
+void _release_metal_pipeline_descriptor(void *pipeline_descriptor);
+void _release_metal_vertex_descriptor(void *vertex_descriptor);
 
 //
 // Buffers

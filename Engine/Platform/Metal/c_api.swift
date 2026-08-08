@@ -135,6 +135,96 @@ func mtl_buffer_get_size(buffer: UnsafeMutableRawPointer) -> Int {
     return buffer.length
 }
 
+@_cdecl("_pipeline_desc_init")
+func pipeline_desc_init() -> UnsafeMutableRawPointer {
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    return Unmanaged.passRetained(pipelineDescriptor).toOpaque()
+}
+
+@_cdecl("_pipeline_desc_set_vertex_function")
+func pipeline_desc_set_vertex_function(
+    pd: UnsafeMutableRawPointer,
+    vf: UnsafeMutableRawPointer
+) {
+    let pd = Unmanaged<MTLRenderPipelineDescriptor>.fromOpaque(pd)
+        .takeUnretainedValue()
+    let vf = Unmanaged<MTLFunction>.fromOpaque(vf).takeUnretainedValue()
+    pd.vertexFunction = vf
+}
+
+@_cdecl("_pipeline_desc_set_fragment_function")
+func pipeline_desc_set_fragment_function(
+    pd: UnsafeMutableRawPointer,
+    ff: UnsafeMutableRawPointer
+) {
+    let pd = Unmanaged<MTLRenderPipelineDescriptor>.fromOpaque(pd)
+        .takeUnretainedValue()
+    let ff = Unmanaged<MTLFunction>.fromOpaque(ff).takeUnretainedValue()
+    pd.fragmentFunction = ff
+}
+
+@_cdecl("_pipeline_desc_set_vertex_desc")
+func pipeline_desc_set_vertex_desc(
+    pd: UnsafeMutableRawPointer,
+    vd: UnsafeMutableRawPointer
+) {
+    let pd = Unmanaged<MTLRenderPipelineDescriptor>.fromOpaque(pd)
+        .takeUnretainedValue()
+    let vd = Unmanaged<MTLVertexDescriptor>.fromOpaque(vd)
+        .takeUnretainedValue()
+    pd.vertexDescriptor = vd
+}
+
+@_cdecl("_vertex_desc_init")
+func vertex_desc_init() -> UnsafeMutableRawPointer {
+    let vertexDescriptor = MTLVertexDescriptor()
+    return Unmanaged.passRetained(vertexDescriptor).toOpaque()
+}
+
+@_cdecl("_vertex_desc_set_attribute")
+func vertex_desc_set_attribute(
+    desc: UnsafeMutableRawPointer,
+    index: Int32,
+    format: Int32,
+    offset: Int32,
+    buffer_index: Int32
+) {
+    let desc = Unmanaged<MTLVertexDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.attributes[Int(index)].format = mtlVertexFormat(from: format)
+    desc.attributes[Int(index)].offset = Int(offset)
+    desc.attributes[Int(index)].bufferIndex = Int(buffer_index)
+}
+
+@_cdecl("_vertex_desc_set_layout")
+func vertex_desc_set_layout(
+    desc: UnsafeMutableRawPointer,
+    index: Int32,
+    step_function: Int32,
+    step_rate: Int32,
+    stride: Int32
+) {
+    let desc = Unmanaged<MTLVertexDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.layouts[Int(index)].stepFunction = mtlVertexStepFunction(
+        from: step_function)
+    desc.layouts[Int(index)].stepRate = Int(step_rate)
+    desc.layouts[Int(index)].stride = Int(stride)
+}
+
+@_cdecl("_release_metal_pipeline_descriptor")
+func release_metal_pipeline_descriptor(
+    pipeline_descriptor: UnsafeMutableRawPointer
+) {
+    Unmanaged<MTLRenderPipelineDescriptor>.fromOpaque(pipeline_descriptor)
+        .release()
+}
+
+@_cdecl("_release_metal_vertex_descriptor")
+func release_metal_vertex_descriptor(vertex_descriptor: UnsafeMutableRawPointer) {
+    Unmanaged<MTLVertexDescriptor>.fromOpaque(vertex_descriptor).release()
+}
+
 @_cdecl("_free_metal_shader")
 func free_metal_shader(shader: UnsafeMutableRawPointer) {
     Unmanaged<MTLFunction>.fromOpaque(shader).release()
@@ -143,83 +233,15 @@ func free_metal_shader(shader: UnsafeMutableRawPointer) {
 @_cdecl("_renderer_make_pipeline")
 func renderer_make_pipeline(
     renderer: UnsafeMutableRawPointer,
-    vertex_format: UInt32,
-    offset: Int,
-    buffer_index: Int,
-    stride: Int,
-    vertex_shader: UnsafeMutableRawPointer,
-    fragment_shader: UnsafeMutableRawPointer
+    pipeline_descriptor: UnsafeMutableRawPointer
 ) -> UnsafeMutableRawPointer {
     let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
         .takeUnretainedValue()
-
-    let vertex_shader = Unmanaged<MTLFunction>.fromOpaque(vertex_shader)
-        .takeUnretainedValue()
-    let fragment_shader = Unmanaged<MTLFunction>.fromOpaque(fragment_shader)
-        .takeUnretainedValue()
-
-    let format: MTLVertexFormat
-    switch vertex_format {
-    case 0:
-        format = .float
-    case 1:
-        format = .float2
-    case 2:
-        format = .float3
-    case 3:
-        format = .float4
-    case 4:
-        format = .int
-    case 5:
-        format = .int2
-    case 6:
-        format = .int3
-    case 7:
-        format = .int4
-    case 8:
-        format = .uint
-    case 9:
-        format = .uint2
-    case 10:
-        format = .uint3
-    case 11:
-        format = .uint4
-    case 12:
-        format = .half
-    case 13:
-        format = .half2
-    case 14:
-        format = .half3
-    case 15:
-        format = .half4
-    case 16:
-        format = .short
-    case 17:
-        format = .short2
-    case 18:
-        format = .short3
-    case 19:
-        format = .short4
-    case 20:
-        format = .ushort
-    case 21:
-        format = .ushort2
-    case 22:
-        format = .ushort3
-    case 23:
-        format = .ushort4
-    default:
-        format = .float3
-    }
+    let pipelineDescriptor = Unmanaged<MTLRenderPipelineDescriptor>
+        .fromOpaque(pipeline_descriptor).takeUnretainedValue()
 
     let pipeline = renderer.make_pipeline(
-        vertex_format: format,
-        offset: offset,
-        buffer_index: buffer_index,
-        stride: stride,
-        vertex_function: vertex_shader,
-        fragment_function: fragment_shader
-    )
+        pipelineDescriptor: pipelineDescriptor)
 
     return Unmanaged.passRetained(pipeline).toOpaque()
 }
@@ -227,4 +249,29 @@ func renderer_make_pipeline(
 @_cdecl("_release_metal_pipeline")
 func release_metal_pipeline(pipeline: UnsafeMutableRawPointer) {
     Unmanaged<MTLRenderPipelineState>.fromOpaque(pipeline).release()
+}
+
+// MARK: - Helpers
+
+private func mtlVertexFormat(from format: Int32) -> MTLVertexFormat {
+    return MTLVertexFormat(rawValue: UInt(format)) ?? .float3
+}
+
+private func mtlVertexStepFunction(
+    from step_function: Int32
+) -> MTLVertexStepFunction {
+    switch step_function {
+    case 0:
+        return .constant
+    case 1:
+        return .perVertex
+    case 2:
+        return .perInstance
+    case 3:
+        return .perPatch
+    case 4:
+        return .perPatchControlPoint
+    default:
+        return .perVertex
+    }
 }

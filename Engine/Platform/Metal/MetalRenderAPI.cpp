@@ -94,10 +94,32 @@ MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
   void *fragment_shader = ((MetalShader *)pipeline_desc.fragment_shader.get())
                               ->get_internal_function();
 
-  void *pipeline = _renderer_make_pipeline(
-      internal_ptr, static_cast<uint32_t>(pipeline_desc.vertex_format),
-      pipeline_desc.off_set, pipeline_desc.buffer_index, pipeline_desc.stride,
-      vertex_shader, fragment_shader);
+  void *pipeline_descriptor = _pipeline_desc_init();
+  _pipeline_desc_set_vertex_function(pipeline_descriptor, vertex_shader);
+  _pipeline_desc_set_fragment_function(pipeline_descriptor, fragment_shader);
+
+  void *vertex_desc = _vertex_desc_init();
+
+  for (const auto &[index, attribute_desc] : pipeline_desc.attributes) {
+    _vertex_desc_set_attribute(vertex_desc, index,
+                               static_cast<int>(attribute_desc.format),
+                               attribute_desc.offset,
+                               attribute_desc.buffer_index);
+  }
+
+  for (const auto &[index, buffer_layou_desc] : pipeline_desc.layouts) {
+    _vertex_desc_set_layout(vertex_desc, index,
+                            static_cast<int>(buffer_layou_desc.step_function),
+                            buffer_layou_desc.step_rate,
+                            buffer_layou_desc.stride);
+  }
+
+  _pipeline_desc_set_vertex_desc(pipeline_descriptor, vertex_desc);
+
+  void *pipeline = _renderer_make_pipeline(internal_ptr, pipeline_descriptor);
+
+  _release_metal_vertex_descriptor(vertex_desc);
+  _release_metal_pipeline_descriptor(pipeline_descriptor);
 
   return std::make_shared<MetalPipeline>(pipeline);
 }

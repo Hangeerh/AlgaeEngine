@@ -146,26 +146,12 @@ class Renderer {
     }
 
     public func make_pipeline(
-        vertex_format: MTLVertexFormat,
-        offset: Int,
-        buffer_index: Int,
-        stride: Int,
-        vertex_function: MTLFunction,
-        fragment_function: MTLFunction
+        pipelineDescriptor: MTLRenderPipelineDescriptor
     )
         -> MTLRenderPipelineState
     {
-        let vertexDescriptor = MTLVertexDescriptor()
-        vertexDescriptor.attributes[0].format = vertex_format
-        vertexDescriptor.attributes[0].offset = offset
-        vertexDescriptor.attributes[0].bufferIndex = buffer_index
-        vertexDescriptor.layouts[0].stride = stride
-
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        pipelineDescriptor.vertexFunction = vertex_function
-        pipelineDescriptor.fragmentFunction = fragment_function
+        // TODO unhardcode
         pipelineDescriptor.colorAttachments[0].pixelFormat = self.pixelFormat
-        pipelineDescriptor.vertexDescriptor = vertexDescriptor
 
         do {
             let pipelineState = try self.device.makeRenderPipelineState(
