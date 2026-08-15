@@ -8,11 +8,11 @@
 
 namespace alg {
 
-class MacWindow : public Window {
+class OSXWindow : public Window {
 public:
-  MacWindow(WindowSpec win_spec);
+  OSXWindow(WindowSpec win_spec);
 
-  ~MacWindow();
+  ~OSXWindow();
   void *get_native_window() const override;
   bool should_close() const override;
   void set_event_callback_fn(EventCallbackFn fn) override;

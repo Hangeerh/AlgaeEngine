@@ -251,8 +251,6 @@ func release_metal_pipeline(pipeline: UnsafeMutableRawPointer) {
     Unmanaged<MTLRenderPipelineState>.fromOpaque(pipeline).release()
 }
 
-// MARK: - Helpers
-
 private func mtlVertexFormat(from format: Int32) -> MTLVertexFormat {
     return MTLVertexFormat(rawValue: UInt(format)) ?? .float3
 }

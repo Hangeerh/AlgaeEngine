@@ -25,7 +25,7 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalShader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalVertexArray.cpp
 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/macOS/MacWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/OSX/OSXWindow.cpp
 )
 
 target_include_directories(AlgaeEngine PUBLIC 

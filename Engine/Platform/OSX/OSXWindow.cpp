@@ -1,4 +1,4 @@
-#include "Platform/macOS/MacWindow.hpp"
+#include "Platform/OSX/OSXWindow.hpp"
 #include "Algae/Core/Window.hpp"
 #include "Algae/Event/ApplicationEvent.hpp"
 #include "Algae/Event/KeyEvent.hpp"
@@ -8,7 +8,7 @@
 
 namespace alg {
 
-MacWindow::MacWindow(WindowSpec win_spec) {
+OSXWindow::OSXWindow(WindowSpec win_spec) {
   data.width = win_spec.width;
   data.height = win_spec.height;
   data.name = win_spec.name;
@@ -98,28 +98,28 @@ MacWindow::MacWindow(WindowSpec win_spec) {
   glfwMakeContextCurrent(native_handle);
 }
 
-MacWindow::~MacWindow() {
+OSXWindow::~OSXWindow() {
   if (native_handle) {
     glfwDestroyWindow(native_handle);
   }
   glfwTerminate();
 }
 
-void *MacWindow::get_native_window() const {
+void *OSXWindow::get_native_window() const {
   return glfwGetCocoaWindow(native_handle);
 }
 
-bool MacWindow::should_close() const {
+bool OSXWindow::should_close() const {
   return glfwWindowShouldClose(native_handle);
 }
 
-void MacWindow::set_event_callback_fn(EventCallbackFn fn) {
+void OSXWindow::set_event_callback_fn(EventCallbackFn fn) {
   data.event_callback = fn;
 }
 
-void MacWindow::on_update() { glfwPollEvents(); }
+void OSXWindow::on_update() { glfwPollEvents(); }
 
-uint32_t MacWindow::get_height() const { return data.height; }
+uint32_t OSXWindow::get_height() const { return data.height; }
 
-uint32_t MacWindow::get_width() const { return data.width; }
+uint32_t OSXWindow::get_width() const { return data.width; }
 } // namespace alg
