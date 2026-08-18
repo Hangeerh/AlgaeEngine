@@ -1,4 +1,4 @@
-#include "Platform/OSX/OSXResourceAPI.hpp"
+#include "Platform/OSX/OSXIOAPI.hpp"
 #include <cstddef>
 
 extern "C" {
@@ -9,22 +9,22 @@ void _load_from_osx_bundle(const char *name, const char *extension,
 
 namespace alg {
 
-ResourceBuffer OSXResourceAPI::load_from_os_bundle(std::string name,
+IOBuffer OSXIOAPI::load_from_os_bundle(std::string name,
                                                    std::string extens) const {
   char *bytes = nullptr;
   size_t size = 0;
   _load_from_osx_bundle(name.c_str(), extens.c_str(), nullptr, &bytes, &size);
-  return ResourceBuffer(bytes, size);
+  return IOBuffer(bytes, size);
 }
 
-ResourceBuffer OSXResourceAPI::load_from_os_bundle(std::string name,
+IOBuffer OSXIOAPI::load_from_os_bundle(std::string name,
                                                    std::string extens,
                                                    std::string subdir) const {
   char *bytes = nullptr;
   size_t size = 0;
   _load_from_osx_bundle(name.c_str(), extens.c_str(), subdir.c_str(), &bytes,
                         &size);
-  return ResourceBuffer(bytes, size);
+  return IOBuffer(bytes, size);
 }
 
 } // namespace alg

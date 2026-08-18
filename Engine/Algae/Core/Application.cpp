@@ -3,14 +3,14 @@
 #include "Algae/Event/ApplicationEvent.hpp"
 #include "Algae/Event/Event.hpp"
 #include "Algae/Renderer/Renderer.hpp"
-#include "Algae/Resource/Resource.hpp"
+#include "Algae/IO/IO.hpp"
 #include <cassert>
 #include <memory>
 
 namespace alg {
 
 Application::Application(AppSpec app_spec) : app_spec(app_spec) {
-  Resource::init();
+  IO::init();
 
   window = Window::create(app_spec.window_spec);
 

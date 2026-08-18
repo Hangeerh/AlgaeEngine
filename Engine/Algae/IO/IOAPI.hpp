@@ -1,27 +1,27 @@
 #pragma once
-#include "Algae/Resource/ResourceBuffer.hpp"
+#include "Algae/IO/IOBuffer.hpp"
 #include <string>
 
 namespace alg {
 
-class ResourceAPI {
+class IOAPI {
 public:
   enum class Platform {
     NONE = 0,
     OSX,
   };
 
-  ResourceAPI() = default;
-  ~ResourceAPI() = default;
+  IOAPI() = default;
+  ~IOAPI() = default;
 
-  virtual ResourceBuffer load_from_os_bundle(std::string name,
+  virtual IOBuffer load_from_os_bundle(std::string name,
                                              std::string extens) const = 0;
-  virtual ResourceBuffer load_from_os_bundle(std::string name,
+  virtual IOBuffer load_from_os_bundle(std::string name,
                                              std::string extens,
                                              std::string subdir) const = 0;
 
   static const Platform platform = Platform::OSX;
-  static ResourceAPI *create();
+  static IOAPI *create();
 };
 
 } // namespace alg
