@@ -19,6 +19,10 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/Shader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Renderer/VertexArray.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Resource/ResourceBuffer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Resource/ResourceAPI.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Resource/Resource.cpp
+
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderPipeline.cpp
@@ -26,6 +30,7 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalVertexArray.cpp
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/OSX/OSXWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/OSX/OSXResourceAPI.cpp
 )
 
 target_include_directories(AlgaeEngine PUBLIC 
@@ -45,6 +50,7 @@ if(APPLE)
     SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderer.swift
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/c_api.swift
+    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/OSX/OSXResourceAPI.swift
     COMPILE_FLAGS
       -Xcc -I${CMAKE_CURRENT_SOURCE_DIR}
       -Xcc -I${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glfw/include

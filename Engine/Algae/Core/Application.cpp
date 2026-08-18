@@ -3,12 +3,15 @@
 #include "Algae/Event/ApplicationEvent.hpp"
 #include "Algae/Event/Event.hpp"
 #include "Algae/Renderer/Renderer.hpp"
+#include "Algae/Resource/Resource.hpp"
 #include <cassert>
 #include <memory>
 
 namespace alg {
 
 Application::Application(AppSpec app_spec) : app_spec(app_spec) {
+  Resource::init();
+
   window = Window::create(app_spec.window_spec);
 
   window->set_event_callback_fn(BIND_EVENT_FN(Application::on_event));
