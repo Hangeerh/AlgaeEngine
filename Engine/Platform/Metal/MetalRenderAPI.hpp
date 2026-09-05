@@ -17,6 +17,8 @@ public:
   ~MetalRenderAPI();
   void begin_scene() override;
   void bind_pipeline(std::shared_ptr<Pipeline> pipeline) override;
+  void bind_depth_stencil_state(
+      std::shared_ptr<DepthStencilState> depth_stencil) override;
   void submit(std::shared_ptr<VertexArray> vertex_array,
               std::shared_ptr<Buffer> uniforms) override;
   void end_scene() override;
@@ -31,6 +33,9 @@ public:
                                                  uint32_t index_count) override;
 
   std::shared_ptr<Shader> make_shader(std::string function_name) override;
+
+  std::shared_ptr<DepthStencilState>
+  make_depth_stencil(DepthStencilDescriptor desc) override;
 
   std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) override;

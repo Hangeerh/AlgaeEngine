@@ -1,6 +1,7 @@
 #include "MetalRenderAPI.hpp"
 #include "./c_api.hpp"
 #include "Platform/Metal/MetalBuffers.hpp"
+#include "Platform/Metal/MetalDepthStencil.hpp"
 #include "Platform/Metal/MetalRenderPipeline.hpp"
 #include "Platform/Metal/MetalShader.hpp"
 #include "Platform/Metal/MetalVertexArray.hpp"
@@ -26,6 +27,12 @@ void MetalRenderAPI::bind_pipeline(std::shared_ptr<Pipeline> pipeline) {
   void *pipeline_ptr =
       ((MetalPipeline *)pipeline.get())->get_metal_pipeline_ptr();
   _renderer_bind_pipeline(internal_ptr, pipeline_ptr);
+}
+
+void MetalRenderAPI::bind_depth_stencil_state(
+    std::shared_ptr<DepthStencilState> depth_stencil) {
+  void *state = ((MetalDepthStencilState *)depth_stencil.get())->get_ptr();
+  _renderer_bind_depth_stencil_state(internal_ptr, state);
 }
 
 void MetalRenderAPI::submit(std::shared_ptr<VertexArray> vertex_array,
@@ -87,6 +94,52 @@ std::shared_ptr<Shader> MetalRenderAPI::make_shader(std::string function_name) {
   return shader;
 }
 
+std::shared_ptr<DepthStencilState>
+MetalRenderAPI::make_depth_stencil(DepthStencilDescriptor desc) {
+  void *descriptor = _depth_stencil_desc_init();
+  _depth_stencil_desc_set_depth_compare_function(
+      descriptor, static_cast<int>(desc.depth_compare_function));
+  _depth_stencil_desc_set_depth_write_enabled(descriptor,
+                                              desc.depth_write_enabled ? 1 : 0);
+
+  if (desc.front_face_stencil) {
+    void *stencil = _stencil_desc_init();
+    _stencil_desc_set_compare_function(
+        stencil,
+        static_cast<int>(desc.front_face_stencil->stencil_compare_function));
+    _stencil_desc_set_operations(
+        stencil,
+        static_cast<int>(desc.front_face_stencil->stencil_failure_operation),
+        static_cast<int>(desc.front_face_stencil->depth_failure_operation),
+        static_cast<int>(
+            desc.front_face_stencil->depth_stencil_pass_operation));
+    _stencil_desc_set_masks(stencil, desc.front_face_stencil->read_mask,
+                            desc.front_face_stencil->write_mask);
+    _depth_stencil_desc_set_front_face_stencil(descriptor, stencil);
+    _release_metal_stencil_descriptor(stencil);
+  }
+
+  if (desc.back_face_stencil) {
+    void *stencil = _stencil_desc_init();
+    _stencil_desc_set_compare_function(
+        stencil,
+        static_cast<int>(desc.back_face_stencil->stencil_compare_function));
+    _stencil_desc_set_operations(
+        stencil,
+        static_cast<int>(desc.back_face_stencil->stencil_failure_operation),
+        static_cast<int>(desc.back_face_stencil->depth_failure_operation),
+        static_cast<int>(desc.back_face_stencil->depth_stencil_pass_operation));
+    _stencil_desc_set_masks(stencil, desc.back_face_stencil->read_mask,
+                            desc.back_face_stencil->write_mask);
+    _depth_stencil_desc_set_back_face_stencil(descriptor, stencil);
+    _release_metal_stencil_descriptor(stencil);
+  }
+
+  void *state = _renderer_make_depth_stencil_state(internal_ptr, descriptor);
+  _release_metal_depth_stencil_descriptor(descriptor);
+  return std::make_shared<MetalDepthStencilState>(state);
+}
+
 std::shared_ptr<Pipeline>
 MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
   void *vertex_shader = ((MetalShader *)pipeline_desc.vertex_shader.get())
@@ -101,17 +154,15 @@ MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
   void *vertex_desc = _vertex_desc_init();
 
   for (const auto &[index, attribute_desc] : pipeline_desc.attributes) {
-    _vertex_desc_set_attribute(vertex_desc, index,
-                               static_cast<int>(attribute_desc.format),
-                               attribute_desc.offset,
-                               attribute_desc.buffer_index);
+    _vertex_desc_set_attribute(
+        vertex_desc, index, static_cast<int>(attribute_desc.format),
+        attribute_desc.offset, attribute_desc.buffer_index);
   }
 
   for (const auto &[index, buffer_layou_desc] : pipeline_desc.layouts) {
-    _vertex_desc_set_layout(vertex_desc, index,
-                            static_cast<int>(buffer_layou_desc.step_function),
-                            buffer_layou_desc.step_rate,
-                            buffer_layou_desc.stride);
+    _vertex_desc_set_layout(
+        vertex_desc, index, static_cast<int>(buffer_layou_desc.step_function),
+        buffer_layou_desc.step_rate, buffer_layou_desc.stride);
   }
 
   _pipeline_desc_set_vertex_desc(pipeline_descriptor, vertex_desc);

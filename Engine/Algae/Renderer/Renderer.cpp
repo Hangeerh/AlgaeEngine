@@ -21,6 +21,11 @@ void bind_pipeline(std::shared_ptr<Pipeline> pipeline) {
   s_api->bind_pipeline(pipeline);
 }
 
+void bind_depth_stencil_state(
+    std::shared_ptr<DepthStencilState> depth_stencil) {
+  s_api->bind_depth_stencil_state(depth_stencil);
+}
+
 void submit(std::shared_ptr<VertexArray> vertex_array,
             std::shared_ptr<Buffer> uniforms) {
   s_api->submit(vertex_array, uniforms);
@@ -49,6 +54,11 @@ std::shared_ptr<VertexArray> make_vertex_array(const float *vertices,
 
 std::shared_ptr<Shader> make_shader(std::string function_name) {
   return s_api->make_shader(function_name);
+}
+
+std::shared_ptr<DepthStencilState>
+make_depth_stencil_state(DepthStencilDescriptor desc) {
+  return s_api->make_depth_stencil(desc);
 }
 
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc) {

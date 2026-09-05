@@ -25,6 +25,7 @@ add_library(AlgaeEngine
 
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalDepthStencil.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderPipeline.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalShader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalVertexArray.cpp

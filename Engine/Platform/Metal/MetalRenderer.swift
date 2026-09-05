@@ -14,6 +14,10 @@ func bridge_metal_layer(nswin_ptr: UnsafeMutableRawPointer) -> CAMetalLayer {
     contentView.layer = metalLayer
 
     metalLayer.contentsScale = nswin.backingScaleFactor
+    metalLayer.drawableSize = CGSize(
+        width: contentView.bounds.width * nswin.backingScaleFactor,
+        height: contentView.bounds.height * nswin.backingScaleFactor
+    )
 
     return metalLayer
 }
@@ -22,10 +26,12 @@ class Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private var pipelineState: MTLRenderPipelineState!
+    private var depthStencilState: MTLDepthStencilState!
     private let pixelFormat: MTLPixelFormat
     private let clearColor: MTLClearColor
     private let layer: CAMetalLayer
     private let library: MTLLibrary
+    private var depthTexture: MTLTexture?
 
     //Persistent state for current frame
     private var commandBuffer: MTLCommandBuffer?
@@ -52,6 +58,7 @@ class Renderer {
         self.clearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0)
 
         self.library = self.device.makeDefaultLibrary()!
+        self.update_depth_texture()
     }
 
     public func begin_scene() {
@@ -64,6 +71,12 @@ class Renderer {
 
     public func bind_pipeline(pipeline: MTLRenderPipelineState) {
         self.pipelineState = pipeline
+    }
+
+    public func bind_depth_stencil_state(
+        depthStencilState: MTLDepthStencilState
+    ) {
+        self.depthStencilState = depthStencilState
     }
 
     public func submit(
@@ -82,6 +95,10 @@ class Renderer {
                 MTLClearColorMake(0.1, 0.1, 0.1, 1.0)
             self.renderPassDescriptor?.colorAttachments[0].storeAction =
                 .store
+            self.renderPassDescriptor?.depthAttachment.texture = self.depthTexture
+            self.renderPassDescriptor?.depthAttachment.loadAction = .clear
+            self.renderPassDescriptor?.depthAttachment.clearDepth = 1.0
+            self.renderPassDescriptor?.depthAttachment.storeAction = .dontCare
 
             self.encoder = self.commandBuffer?
                 .makeRenderCommandEncoder(
@@ -92,6 +109,7 @@ class Renderer {
             self.encoder?.setRenderPipelineState(
                 self.pipelineState
             )
+            self.encoder?.setDepthStencilState(self.depthStencilState)
 
             self.encoder?.setVertexBuffer(
                 vertex_buffer,
@@ -130,6 +148,18 @@ class Renderer {
             width: CGFloat(width),
             height: CGFloat(height)
         )
+        self.update_depth_texture()
+    }
+
+    private func update_depth_texture() {
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .depth32Float,
+            width: max(Int(self.layer.drawableSize.width), 1),
+            height: max(Int(self.layer.drawableSize.height), 1),
+            mipmapped: false
+        )
+        descriptor.usage = .renderTarget
+        self.depthTexture = self.device.makeTexture(descriptor: descriptor)
     }
 
     public func make_buffer(size: Int) -> MTLBuffer {
@@ -162,5 +192,18 @@ class Renderer {
             print("Failed to create renderPipelineState: \(error)")
             exit(-1)
         }
+    }
+
+    public func make_depth_stencil_state(
+        descriptor: MTLDepthStencilDescriptor
+    ) -> MTLDepthStencilState {
+        guard
+            let state = self.device.makeDepthStencilState(
+                descriptor: descriptor
+            )
+        else {
+            fatalError("Failed to create depth stencil state")
+        }
+        return state
     }
 }

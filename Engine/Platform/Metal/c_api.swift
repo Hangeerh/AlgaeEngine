@@ -38,6 +38,19 @@ func renderer_bind_pipeline(
     renderer.bind_pipeline(pipeline: pipeline)
 }
 
+@_cdecl("_renderer_bind_depth_stencil_state")
+func renderer_bind_depth_stencil_state(
+    renderer: UnsafeMutableRawPointer,
+    depth_stencil_state: UnsafeMutableRawPointer
+) {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+    let depthStencilState = Unmanaged<MTLDepthStencilState>
+        .fromOpaque(depth_stencil_state).takeUnretainedValue()
+
+    renderer.bind_depth_stencil_state(depthStencilState: depthStencilState)
+}
+
 @_cdecl("_renderer_submit")
 func renderer_submit(
     renderer: UnsafeMutableRawPointer,
@@ -225,6 +238,114 @@ func release_metal_vertex_descriptor(vertex_descriptor: UnsafeMutableRawPointer)
     Unmanaged<MTLVertexDescriptor>.fromOpaque(vertex_descriptor).release()
 }
 
+@_cdecl("_depth_stencil_desc_init")
+func depth_stencil_desc_init() -> UnsafeMutableRawPointer {
+    return Unmanaged.passRetained(MTLDepthStencilDescriptor()).toOpaque()
+}
+
+@_cdecl("_depth_stencil_desc_set_depth_compare_function")
+func depth_stencil_desc_set_depth_compare_function(
+    desc: UnsafeMutableRawPointer,
+    compare_function: Int32
+) {
+    let desc = Unmanaged<MTLDepthStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.depthCompareFunction = mtlCompareFunction(from: compare_function)
+}
+
+@_cdecl("_depth_stencil_desc_set_depth_write_enabled")
+func depth_stencil_desc_set_depth_write_enabled(
+    desc: UnsafeMutableRawPointer,
+    enabled: Int32
+) {
+    let desc = Unmanaged<MTLDepthStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.isDepthWriteEnabled = enabled != 0
+}
+
+@_cdecl("_depth_stencil_desc_set_front_face_stencil")
+func depth_stencil_desc_set_front_face_stencil(
+    desc: UnsafeMutableRawPointer,
+    stencil: UnsafeMutableRawPointer
+) {
+    let desc = Unmanaged<MTLDepthStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    let stencil = Unmanaged<MTLStencilDescriptor>.fromOpaque(stencil)
+        .takeUnretainedValue()
+    desc.frontFaceStencil = stencil
+}
+
+@_cdecl("_depth_stencil_desc_set_back_face_stencil")
+func depth_stencil_desc_set_back_face_stencil(
+    desc: UnsafeMutableRawPointer,
+    stencil: UnsafeMutableRawPointer
+) {
+    let desc = Unmanaged<MTLDepthStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    let stencil = Unmanaged<MTLStencilDescriptor>.fromOpaque(stencil)
+        .takeUnretainedValue()
+    desc.backFaceStencil = stencil
+}
+
+@_cdecl("_stencil_desc_init")
+func stencil_desc_init() -> UnsafeMutableRawPointer {
+    return Unmanaged.passRetained(MTLStencilDescriptor()).toOpaque()
+}
+
+@_cdecl("_stencil_desc_set_compare_function")
+func stencil_desc_set_compare_function(
+    desc: UnsafeMutableRawPointer,
+    compare_function: Int32
+) {
+    let desc = Unmanaged<MTLStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.stencilCompareFunction = mtlCompareFunction(from: compare_function)
+}
+
+@_cdecl("_stencil_desc_set_operations")
+func stencil_desc_set_operations(
+    desc: UnsafeMutableRawPointer,
+    stencil_failure: Int32,
+    depth_failure: Int32,
+    depth_stencil_pass: Int32
+) {
+    let desc = Unmanaged<MTLStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.stencilFailureOperation = mtlStencilOperation(from: stencil_failure)
+    desc.depthFailureOperation = mtlStencilOperation(from: depth_failure)
+    desc.depthStencilPassOperation = mtlStencilOperation(
+        from: depth_stencil_pass)
+}
+
+@_cdecl("_stencil_desc_set_masks")
+func stencil_desc_set_masks(
+    desc: UnsafeMutableRawPointer,
+    read_mask: UInt32,
+    write_mask: UInt32
+) {
+    let desc = Unmanaged<MTLStencilDescriptor>.fromOpaque(desc)
+        .takeUnretainedValue()
+    desc.readMask = read_mask
+    desc.writeMask = write_mask
+}
+
+@_cdecl("_release_metal_depth_stencil_descriptor")
+func release_metal_depth_stencil_descriptor(
+    descriptor: UnsafeMutableRawPointer
+) {
+    Unmanaged<MTLDepthStencilDescriptor>.fromOpaque(descriptor).release()
+}
+
+@_cdecl("_release_metal_stencil_descriptor")
+func release_metal_stencil_descriptor(descriptor: UnsafeMutableRawPointer) {
+    Unmanaged<MTLStencilDescriptor>.fromOpaque(descriptor).release()
+}
+
+@_cdecl("_release_metal_depth_stencil_state")
+func release_metal_depth_stencil_state(state: UnsafeMutableRawPointer) {
+    Unmanaged<MTLDepthStencilState>.fromOpaque(state).release()
+}
+
 @_cdecl("_free_metal_shader")
 func free_metal_shader(shader: UnsafeMutableRawPointer) {
     Unmanaged<MTLFunction>.fromOpaque(shader).release()
@@ -244,6 +365,19 @@ func renderer_make_pipeline(
         pipelineDescriptor: pipelineDescriptor)
 
     return Unmanaged.passRetained(pipeline).toOpaque()
+}
+
+@_cdecl("_renderer_make_depth_stencil_state")
+func renderer_make_depth_stencil_state(
+    renderer: UnsafeMutableRawPointer,
+    depth_stencil_descriptor: UnsafeMutableRawPointer
+) -> UnsafeMutableRawPointer {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+    let descriptor = Unmanaged<MTLDepthStencilDescriptor>
+        .fromOpaque(depth_stencil_descriptor).takeUnretainedValue()
+    let state = renderer.make_depth_stencil_state(descriptor: descriptor)
+    return Unmanaged.passRetained(state).toOpaque()
 }
 
 @_cdecl("_release_metal_pipeline")
@@ -272,4 +406,12 @@ private func mtlVertexStepFunction(
     default:
         return .perVertex
     }
+}
+
+private func mtlCompareFunction(from value: Int32) -> MTLCompareFunction {
+    return MTLCompareFunction(rawValue: UInt(value)) ?? .always
+}
+
+private func mtlStencilOperation(from value: Int32) -> MTLStencilOperation {
+    return MTLStencilOperation(rawValue: UInt(value)) ?? .keep
 }

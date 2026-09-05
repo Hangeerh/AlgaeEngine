@@ -1,6 +1,7 @@
 #pragma once
 #include "Algae/Core/Window.hpp"
 #include "Algae/Renderer/Buffers.hpp"
+#include "Algae/Renderer/DepthStencil.hpp"
 #include "Algae/Renderer/RenderPipeline.hpp"
 #include "Algae/Renderer/Shader.hpp"
 #include "Algae/Renderer/VertexArray.hpp"
@@ -25,6 +26,8 @@ public:
 
   virtual void begin_scene() = 0;
   virtual void bind_pipeline(std::shared_ptr<Pipeline> pipeline) = 0;
+  virtual void bind_depth_stencil_state(
+      std::shared_ptr<DepthStencilState> depth_stencil) = 0;
   virtual void submit(std::shared_ptr<VertexArray> vertex_array,
                       std::shared_ptr<Buffer> uniforms) = 0;
   virtual void end_scene() = 0;
@@ -39,6 +42,9 @@ public:
                     const uint32_t *indices, uint32_t index_count) = 0;
 
   virtual std::shared_ptr<Shader> make_shader(std::string function_name) = 0;
+
+  virtual std::shared_ptr<DepthStencilState>
+  make_depth_stencil(DepthStencilDescriptor desc) = 0;
 
   virtual std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) = 0;
