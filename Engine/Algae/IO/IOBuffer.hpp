@@ -9,6 +9,8 @@ public:
   ~IOBuffer() = default;
   IOBuffer(char *bytes, size_t size);
 
+  IOBuffer slice(size_t start, size_t size);
+
   size_t size() const;
   char get(size_t byte_index) const;
 

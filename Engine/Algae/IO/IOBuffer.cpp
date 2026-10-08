@@ -3,11 +3,11 @@
 
 namespace alg {
 
-IOBuffer::IOBuffer(char *bytes, size_t size) {
-  assert(bytes != nullptr && "IOBuffer received empty buffer");
-  assert(size > 0 && "IOBuffer cannot create empty buffer");
-  bufstart = bytes;
-  bufsize = size;
+IOBuffer::IOBuffer(char *bytes, size_t size) : bufstart(bytes), bufsize(size) {}
+
+IOBuffer IOBuffer::slice(size_t start, size_t size) {
+  IOBuffer nbuf(bufstart + start, size);
+  return nbuf;
 }
 
 size_t IOBuffer::size() const { return bufsize; }

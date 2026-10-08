@@ -23,6 +23,8 @@ add_library(AlgaeEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/IO/IOAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/IO/IO.cpp
 
+  ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Algae/Scene/ObjFileDeserializer.cpp
+
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalRenderAPI.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalBuffers.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Engine/Platform/Metal/MetalDepthStencil.cpp

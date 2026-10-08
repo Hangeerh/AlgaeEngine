@@ -1,8 +1,15 @@
 #pragma once
-#include "Algae/IO/IOBuffer.hpp"
+#include "Algae/Renderer/RenderPipeline.hpp"
 #include "Algae/Renderer/VertexArray.hpp"
 
 namespace alg {
 
-std::shared_ptr<VertexArray> deserialize_obj_file(IOBuffer buf);
-}
+struct Mesh {
+  std::shared_ptr<VertexArray> vertex_data;
+
+  // For the vertex format
+  std::map<int, VertexAttributeDescriptor> attributes;
+  std::map<int, VertexBufferLayoutDescriptor> layouts;
+};
+
+} // namespace alg
