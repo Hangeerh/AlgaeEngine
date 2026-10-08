@@ -4,6 +4,7 @@
 #include "Algae/Renderer/DepthStencil.hpp"
 #include "Algae/Renderer/RenderPipeline.hpp"
 #include "Algae/Renderer/Shader.hpp"
+#include "Algae/Renderer/Texture.hpp"
 #include "Algae/Renderer/VertexArray.hpp"
 #include <cstdint>
 #include <memory>
@@ -48,6 +49,12 @@ public:
 
   virtual std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) = 0;
+
+  virtual std::shared_ptr<Texture>
+  make_texture(TextureDescriptor texture_desc) = 0;
+
+  virtual std::shared_ptr<Sampler>
+  make_sampler(SamplerDescriptor sampler_desc) = 0;
 
   virtual uint32_t get_drawable_height() const = 0;
   virtual uint32_t get_drawable_width() const = 0;

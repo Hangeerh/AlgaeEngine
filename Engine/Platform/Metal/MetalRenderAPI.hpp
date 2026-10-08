@@ -40,6 +40,12 @@ public:
   std::shared_ptr<Pipeline>
   make_pipeline(PipelineDescriptor pipeline_desc) override;
 
+  std::shared_ptr<Texture>
+  make_texture(TextureDescriptor texture_desc) override;
+
+  std::shared_ptr<Sampler>
+  make_sampler(SamplerDescriptor sampler_desc) override;
+
   uint32_t get_drawable_height() const override;
   uint32_t get_drawable_width() const override;
 };

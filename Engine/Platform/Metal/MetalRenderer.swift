@@ -206,4 +206,24 @@ class Renderer {
         }
         return state
     }
+
+    public func make_sampler(
+        descriptor: MTLSamplerDescriptor
+    ) -> MTLSamplerState {
+        guard let sampler = self.device.makeSamplerState(descriptor: descriptor)
+        else {
+            fatalError("Failed to create sampler state")
+        }
+        return sampler
+    }
+
+    public func make_texture(
+        descriptor: MTLTextureDescriptor
+    ) -> MTLTexture {
+        guard let texture = self.device.makeTexture(descriptor: descriptor)
+        else {
+            fatalError("Failed to create texture")
+        }
+        return texture
+    }
 }

@@ -4,6 +4,7 @@
 #include "Platform/Metal/MetalDepthStencil.hpp"
 #include "Platform/Metal/MetalRenderPipeline.hpp"
 #include "Platform/Metal/MetalShader.hpp"
+#include "Platform/Metal/MetalTexture.hpp"
 #include "Platform/Metal/MetalVertexArray.hpp"
 #include <cstdint>
 #include <memory>
@@ -173,6 +174,28 @@ MetalRenderAPI::make_pipeline(PipelineDescriptor pipeline_desc) {
   _release_metal_pipeline_descriptor(pipeline_descriptor);
 
   return std::make_shared<MetalPipeline>(pipeline);
+}
+
+std::shared_ptr<Texture>
+MetalRenderAPI::make_texture(TextureDescriptor texture_desc) {
+  void *texture = _renderer_make_texture(
+      internal_ptr, static_cast<uint32_t>(texture_desc.pixel_format),
+      texture_desc.width, texture_desc.height, texture_desc.mipmap_level_count,
+      static_cast<uint32_t>(texture_desc.usage));
+
+  return std::make_shared<MetalTexture>(texture);
+}
+
+std::shared_ptr<Sampler>
+MetalRenderAPI::make_sampler(SamplerDescriptor sampler_desc) {
+  void *sampler = _renderer_make_sampler(
+      internal_ptr, static_cast<uint32_t>(sampler_desc.min_filter),
+      static_cast<uint32_t>(sampler_desc.mag_filter),
+      static_cast<uint32_t>(sampler_desc.mip_filter),
+      static_cast<uint32_t>(sampler_desc.s_address_mode),
+      static_cast<uint32_t>(sampler_desc.t_address_mode));
+
+  return std::make_shared<MetalSampler>(sampler);
 }
 
 uint32_t MetalRenderAPI::get_drawable_height() const { return drawable_height; }

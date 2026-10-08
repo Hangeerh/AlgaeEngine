@@ -2,6 +2,7 @@
 #include "Algae/Core/Window.hpp"
 #include "Algae/Renderer/DepthStencil.hpp"
 #include "Algae/Renderer/RenderAPI.hpp"
+#include "Algae/Renderer/Texture.hpp"
 #include <cstdint>
 #include <memory>
 #include <string>
@@ -36,6 +37,10 @@ std::shared_ptr<DepthStencilState>
 make_depth_stencil_state(DepthStencilDescriptor desc);
 
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc);
+
+std::shared_ptr<Texture> make_texture(TextureDescriptor texture_desc);
+
+std::shared_ptr<Sampler> make_sampler(SamplerDescriptor sampler_desc);
 
 uint32_t get_drawable_height();
 uint32_t get_drawable_width();

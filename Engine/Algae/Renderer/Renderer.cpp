@@ -65,6 +65,14 @@ std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc) {
   return s_api->make_pipeline(pipeline_desc);
 }
 
+std::shared_ptr<Texture> make_texture(TextureDescriptor texture_desc) {
+  return s_api->make_texture(texture_desc);
+}
+
+std::shared_ptr<Sampler> make_sampler(SamplerDescriptor sampler_desc) {
+  return s_api->make_sampler(sampler_desc);
+}
+
 uint32_t get_drawable_height() { return s_api->get_drawable_height(); }
 
 uint32_t get_drawable_width() { return s_api->get_drawable_width(); }

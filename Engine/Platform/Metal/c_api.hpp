@@ -36,8 +36,21 @@ void *_renderer_make_shader(void *swift_renderer_ptr, const char *shader_name);
 
 void *_renderer_make_pipeline(void *swift_renderer_ptr,
                               void *pipeline_descriptor);
+
 void *_renderer_make_depth_stencil_state(void *swift_renderer_ptr,
                                          void *depth_stencil_descriptor);
+
+void *_renderer_make_sampler(void *swift_renderer_ptr, uint32_t min_filter,
+                             uint32_t mag_filter, uint32_t mip_filter,
+                             uint32_t s_address_mode,
+                             uint32_t t_address_mode);
+
+void *_renderer_make_texture(void *swift_renderer_ptr, uint32_t pixel_format,
+                             uint32_t width, uint32_t height,
+                             uint32_t mipmap_level_count, uint32_t usage);
+
+void _release_metal_texture(void *texture);
+void _release_metal_sampler(void *sampler);
 
 //
 // Pipeline building
@@ -93,4 +106,5 @@ void _stencil_desc_set_masks(void *desc, uint32_t read_mask,
 void _release_metal_depth_stencil_descriptor(void *descriptor);
 void _release_metal_stencil_descriptor(void *descriptor);
 void _release_metal_depth_stencil_state(void *state);
+
 }

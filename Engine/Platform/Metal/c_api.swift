@@ -380,9 +380,114 @@ func renderer_make_depth_stencil_state(
     return Unmanaged.passRetained(state).toOpaque()
 }
 
+@_cdecl("_renderer_make_sampler")
+func renderer_make_sampler(
+    renderer: UnsafeMutableRawPointer,
+    min_filter: UInt32,
+    mag_filter: UInt32,
+    mip_filter: UInt32,
+    s_address_mode: UInt32,
+    t_address_mode: UInt32
+) -> UnsafeMutableRawPointer {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    let descriptor = MTLSamplerDescriptor()
+    descriptor.minFilter = mtlSamplerMinMagFilter(from: min_filter)
+    descriptor.magFilter = mtlSamplerMinMagFilter(from: mag_filter)
+    descriptor.mipFilter = mtlSamplerMipFilter(from: mip_filter)
+    descriptor.sAddressMode = mtlSamplerAddressMode(from: s_address_mode)
+    descriptor.tAddressMode = mtlSamplerAddressMode(from: t_address_mode)
+
+    let sampler = renderer.make_sampler(descriptor: descriptor)
+    return Unmanaged.passRetained(sampler).toOpaque()
+}
+
+@_cdecl("_renderer_make_texture")
+func renderer_make_texture(
+    renderer: UnsafeMutableRawPointer,
+    pixel_format: UInt32,
+    width: UInt32,
+    height: UInt32,
+    mipmap_level_count: UInt32,
+    usage: UInt32
+) -> UnsafeMutableRawPointer {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    guard
+        width > 0,
+        height > 0,
+        mipmap_level_count > 0,
+        let format = MTLPixelFormat(rawValue: UInt(pixel_format)),
+        format != .invalid,
+        usage & ~UInt32(0x7) == 0
+    else {
+        fatalError("Invalid texture descriptor")
+    }
+
+    let descriptor = MTLTextureDescriptor()
+    descriptor.textureType = .type2D
+    descriptor.pixelFormat = format
+    descriptor.width = Int(width)
+    descriptor.height = Int(height)
+    descriptor.mipmapLevelCount = Int(mipmap_level_count)
+    descriptor.usage = MTLTextureUsage(rawValue: UInt(usage))
+
+    let texture = renderer.make_texture(descriptor: descriptor)
+    return Unmanaged.passRetained(texture).toOpaque()
+}
+
+@_cdecl("_release_metal_texture")
+func release_metal_texture(texture: UnsafeMutableRawPointer) {
+    Unmanaged<MTLTexture>.fromOpaque(texture).release()
+}
+
+@_cdecl("_release_metal_sampler")
+func release_metal_sampler(sampler: UnsafeMutableRawPointer) {
+    Unmanaged<MTLSamplerState>.fromOpaque(sampler).release()
+}
+
 @_cdecl("_release_metal_pipeline")
 func release_metal_pipeline(pipeline: UnsafeMutableRawPointer) {
     Unmanaged<MTLRenderPipelineState>.fromOpaque(pipeline).release()
+}
+
+private func mtlSamplerMinMagFilter(from value: UInt32) -> MTLSamplerMinMagFilter {
+    switch value {
+    case 0:
+        return .nearest
+    case 1:
+        return .linear
+    default:
+        fatalError("Unsupported sampler min/mag filter: \(value)")
+    }
+}
+
+private func mtlSamplerMipFilter(from value: UInt32) -> MTLSamplerMipFilter {
+    switch value {
+    case 0:
+        return .notMipmapped
+    case 1:
+        return .nearest
+    case 2:
+        return .linear
+    default:
+        fatalError("Unsupported sampler mip filter: \(value)")
+    }
+}
+
+private func mtlSamplerAddressMode(from value: UInt32) -> MTLSamplerAddressMode {
+    switch value {
+    case 0:
+        return .clampToEdge
+    case 1:
+        return .mirrorRepeat
+    case 2:
+        return .repeat
+    default:
+        fatalError("Unsupported sampler address mode: \(value)")
+    }
 }
 
 private func mtlVertexFormat(from format: Int32) -> MTLVertexFormat {
