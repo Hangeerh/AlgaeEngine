@@ -7,8 +7,10 @@
 #include "Platform/Metal/MetalTexture.hpp"
 #include "Platform/Metal/MetalVertexArray.hpp"
 #include <cstdint>
+#include <stdexcept>
 #include <memory>
 #include <string>
+#include <sys/types.h>
 
 namespace alg {
 
@@ -38,17 +40,40 @@ void MetalRenderAPI::bind_depth_stencil_state(
 
 void MetalRenderAPI::submit(std::shared_ptr<VertexArray> vertex_array,
                             std::shared_ptr<Buffer> uniforms) {
-  std::shared_ptr<MetalBuffer> vertex_buffer =
-      std::static_pointer_cast<MetalBuffer>(vertex_array->get_vertex_buffer());
-  std::shared_ptr<MetalBuffer> index_buffer =
-      std::static_pointer_cast<MetalBuffer>(vertex_array->get_index_buffer());
-  std::shared_ptr<MetalBuffer> uniform_buffer =
-      std::static_pointer_cast<MetalBuffer>(uniforms);
+  void *vertex_buffer =
+      std::static_pointer_cast<MetalBuffer>(vertex_array->get_vertex_buffer())
+          ->get_metal_buffer_ptr();
+  void *index_buffer =
+      std::static_pointer_cast<MetalBuffer>(vertex_array->get_index_buffer())
+          ->get_metal_buffer_ptr();
+  uint32_t index_count = vertex_array->get_index_count();
+  void *uniform_buffer =
+      std::static_pointer_cast<MetalBuffer>(uniforms)->get_metal_buffer_ptr();
 
-  _renderer_submit(internal_ptr, vertex_buffer->get_metal_buffer_ptr(),
-                   index_buffer->get_metal_buffer_ptr(),
-                   vertex_array->get_index_count(),
-                   uniform_buffer->get_metal_buffer_ptr());
+  _renderer_submit(internal_ptr, vertex_buffer, index_buffer, index_count,
+                   uniform_buffer);
+}
+void MetalRenderAPI::submit(std::shared_ptr<VertexArray> vertex_array,
+                            std::shared_ptr<Buffer> uniforms,
+                            std::shared_ptr<Texture> texture,
+                            std::shared_ptr<Sampler> sampler) {
+  void *vertex_buffer =
+      std::static_pointer_cast<MetalBuffer>(vertex_array->get_vertex_buffer())
+          ->get_metal_buffer_ptr();
+  void *index_buffer =
+      std::static_pointer_cast<MetalBuffer>(vertex_array->get_index_buffer())
+          ->get_metal_buffer_ptr();
+  uint32_t index_count = vertex_array->get_index_count();
+  void *uniform_buffer =
+      std::static_pointer_cast<MetalBuffer>(uniforms)->get_metal_buffer_ptr();
+  void *metal_texture =
+      std::static_pointer_cast<MetalTexture>(texture)->get_ptr();
+  void *metal_sampler =
+      std::static_pointer_cast<MetalSampler>(sampler)->get_ptr();
+
+  _renderer_submit_textured(internal_ptr, vertex_buffer, index_buffer,
+                            index_count, uniform_buffer, metal_texture,
+                            metal_sampler);
 }
 
 void MetalRenderAPI::end_scene() { _renderer_end_scene(internal_ptr); }
@@ -183,6 +208,17 @@ MetalRenderAPI::make_texture(TextureDescriptor texture_desc) {
       texture_desc.width, texture_desc.height, texture_desc.mipmap_level_count,
       static_cast<uint32_t>(texture_desc.usage));
 
+  return std::make_shared<MetalTexture>(texture);
+}
+
+std::shared_ptr<Texture>
+MetalRenderAPI::make_texture_from_image(const void *bytes, int size) {
+  if (bytes == nullptr || size <= 0) {
+    throw std::invalid_argument("Image texture data must not be empty");
+  }
+
+  void *texture =
+      _renderer_make_texture_from_image(internal_ptr, bytes, size);
   return std::make_shared<MetalTexture>(texture);
 }
 

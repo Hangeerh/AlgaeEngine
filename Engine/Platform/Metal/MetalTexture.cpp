@@ -7,7 +7,11 @@ MetalTexture::MetalTexture(void *mtl_texture) : internal_ptr(mtl_texture) {}
 
 MetalTexture::~MetalTexture() { _release_metal_texture(internal_ptr); }
 
+void *MetalTexture::get_ptr() { return internal_ptr; }
+
 MetalSampler::MetalSampler(void *mtl_sampler) : internal_ptr(mtl_sampler) {}
 
 MetalSampler::~MetalSampler() { _release_metal_sampler(internal_ptr); }
+
+void *MetalSampler::get_ptr() { return internal_ptr; }
 } // namespace alg

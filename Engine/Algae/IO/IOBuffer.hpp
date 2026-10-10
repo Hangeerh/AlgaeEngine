@@ -11,12 +11,13 @@ public:
 
   IOBuffer slice(size_t start, size_t size);
 
+  char *get_ptr() const;
   size_t size() const;
   char get(size_t byte_index) const;
 
 private:
-  char *bufstart;
-  size_t bufsize;
+  char *bufstart = nullptr;
+  size_t bufsize = 0;
 };
 
 } // namespace alg

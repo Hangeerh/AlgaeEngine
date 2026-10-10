@@ -77,6 +77,38 @@ func renderer_submit(
     )
 }
 
+@_cdecl("_renderer_submit_textured")
+func renderer_submit_textured(
+    renderer: UnsafeMutableRawPointer,
+    vertex_buffer: UnsafeMutableRawPointer,
+    index_buffer: UnsafeMutableRawPointer,
+    index_count: UInt32,
+    uniform_buffer: UnsafeMutableRawPointer,
+    texture: UnsafeMutableRawPointer,
+    sampler: UnsafeMutableRawPointer
+) {
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+
+    let vertex_buffer = Unmanaged<MTLBuffer>.fromOpaque(vertex_buffer)
+        .takeUnretainedValue()
+    let index_buffer = Unmanaged<MTLBuffer>.fromOpaque(index_buffer)
+        .takeUnretainedValue()
+    let uniform_buffer = Unmanaged<MTLBuffer>.fromOpaque(uniform_buffer)
+        .takeUnretainedValue()
+    let texture = Unmanaged<MTLTexture>.fromOpaque(texture).takeUnretainedValue()
+    let sampler = Unmanaged<MTLSamplerState>.fromOpaque(sampler).takeUnretainedValue()
+
+    renderer.submit(
+        vertex_buffer: vertex_buffer,
+        index_buffer: index_buffer,
+        index_count: index_count,
+        uniform_buffer: uniform_buffer,
+        texture: texture,
+        sampler: sampler
+    )
+}
+
 @_cdecl("_renderer_end_scene")
 func renderer_end_scene(renderer: UnsafeMutableRawPointer) {
     let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
@@ -435,6 +467,23 @@ func renderer_make_texture(
     descriptor.usage = MTLTextureUsage(rawValue: UInt(usage))
 
     let texture = renderer.make_texture(descriptor: descriptor)
+    return Unmanaged.passRetained(texture).toOpaque()
+}
+
+@_cdecl("_renderer_make_texture_from_image")
+func renderer_make_texture_from_image(
+    renderer: UnsafeMutableRawPointer,
+    bytes: UnsafeRawPointer,
+    size: Int32
+) -> UnsafeMutableRawPointer {
+    guard size > 0 else {
+        fatalError("Image texture data must not be empty")
+    }
+
+    let renderer = Unmanaged<Renderer>.fromOpaque(renderer)
+        .takeUnretainedValue()
+    let data = Data(bytes: bytes, count: Int(size))
+    let texture = renderer.make_texture_from_image(data: data)
     return Unmanaged.passRetained(texture).toOpaque()
 }
 

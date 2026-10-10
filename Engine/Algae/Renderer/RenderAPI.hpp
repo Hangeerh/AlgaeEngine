@@ -31,6 +31,10 @@ public:
       std::shared_ptr<DepthStencilState> depth_stencil) = 0;
   virtual void submit(std::shared_ptr<VertexArray> vertex_array,
                       std::shared_ptr<Buffer> uniforms) = 0;
+  virtual void submit(std::shared_ptr<VertexArray> vertex_array,
+                      std::shared_ptr<Buffer> uniforms,
+                      std::shared_ptr<Texture> texture,
+                      std::shared_ptr<Sampler> sampler) = 0;
   virtual void end_scene() = 0;
 
   virtual void on_window_resize(uint32_t width, uint32_t height) = 0;
@@ -52,6 +56,9 @@ public:
 
   virtual std::shared_ptr<Texture>
   make_texture(TextureDescriptor texture_desc) = 0;
+
+  virtual std::shared_ptr<Texture>
+  make_texture_from_image(const void *bytes, int size) = 0;
 
   virtual std::shared_ptr<Sampler>
   make_sampler(SamplerDescriptor sampler_desc) = 0;

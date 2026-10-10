@@ -21,6 +21,10 @@ public:
       std::shared_ptr<DepthStencilState> depth_stencil) override;
   void submit(std::shared_ptr<VertexArray> vertex_array,
               std::shared_ptr<Buffer> uniforms) override;
+  void submit(std::shared_ptr<VertexArray> vertex_array,
+              std::shared_ptr<Buffer> uniforms,
+              std::shared_ptr<Texture> texture,
+              std::shared_ptr<Sampler> sampler) override;
   void end_scene() override;
   void on_window_resize(uint32_t width, uint32_t height) override;
 
@@ -42,6 +46,9 @@ public:
 
   std::shared_ptr<Texture>
   make_texture(TextureDescriptor texture_desc) override;
+
+  std::shared_ptr<Texture>
+  make_texture_from_image(const void *bytes, int size) override;
 
   std::shared_ptr<Sampler>
   make_sampler(SamplerDescriptor sampler_desc) override;

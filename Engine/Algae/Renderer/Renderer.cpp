@@ -31,6 +31,12 @@ void submit(std::shared_ptr<VertexArray> vertex_array,
   s_api->submit(vertex_array, uniforms);
 }
 
+void submit(std::shared_ptr<VertexArray> vertex_array,
+            std::shared_ptr<Buffer> uniforms, std::shared_ptr<Texture> texture,
+            std::shared_ptr<Sampler> sampler) {
+  s_api->submit(vertex_array, uniforms, texture, sampler);
+}
+
 void end_scene() { s_api->end_scene(); }
 
 void on_window_resize(uint32_t width, uint32_t height) {
@@ -67,6 +73,11 @@ std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc) {
 
 std::shared_ptr<Texture> make_texture(TextureDescriptor texture_desc) {
   return s_api->make_texture(texture_desc);
+}
+
+std::shared_ptr<Texture> make_texture_from_image(const void *bytes,
+                                                      int size) {
+  return s_api->make_texture_from_image(bytes, size);
 }
 
 std::shared_ptr<Sampler> make_sampler(SamplerDescriptor sampler_desc) {

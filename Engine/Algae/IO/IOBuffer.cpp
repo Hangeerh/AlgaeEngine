@@ -10,6 +10,8 @@ IOBuffer IOBuffer::slice(size_t start, size_t size) {
   return nbuf;
 }
 
+char *IOBuffer::get_ptr() const { return bufstart; }
+
 size_t IOBuffer::size() const { return bufsize; }
 
 char IOBuffer::get(size_t byte_index) const {

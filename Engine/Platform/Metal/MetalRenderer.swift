@@ -1,5 +1,6 @@
 import AppKit
 import Foundation
+import Foundation
 import Metal
 import MetalKit
 
@@ -26,7 +27,7 @@ class Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private var pipelineState: MTLRenderPipelineState!
-    private var depthStencilState: MTLDepthStencilState!
+    private var depthStencilState: MTLDepthStencilState?
     private let pixelFormat: MTLPixelFormat
     private let clearColor: MTLClearColor
     private let layer: CAMetalLayer
@@ -83,7 +84,9 @@ class Renderer {
         vertex_buffer: MTLBuffer,
         index_buffer: MTLBuffer,
         index_count: UInt32,
-        uniform_buffer: MTLBuffer
+        uniform_buffer: MTLBuffer,
+        texture: MTLTexture? = nil,
+        sampler: MTLSamplerState? = nil
     ) {
         autoreleasepool {
             self.renderPassDescriptor = MTLRenderPassDescriptor()
@@ -109,7 +112,15 @@ class Renderer {
             self.encoder?.setRenderPipelineState(
                 self.pipelineState
             )
-            self.encoder?.setDepthStencilState(self.depthStencilState)
+
+            if self.depthStencilState != nil {
+                self.encoder?.setDepthStencilState(self.depthStencilState)
+            }
+
+            if texture != nil && sampler != nil {
+                self.encoder?.setFragmentTexture(texture, index: 0)
+                self.encoder?.setFragmentSamplerState(sampler, index: 0)
+            }
 
             self.encoder?.setVertexBuffer(
                 vertex_buffer,
@@ -225,5 +236,16 @@ class Renderer {
             fatalError("Failed to create texture")
         }
         return texture
+    }
+
+    public func make_texture_from_image(data: Data) -> MTLTexture {
+        do {
+            return try MTKTextureLoader(device: self.device).newTexture(
+                data: data,
+                options: [.origin: MTKTextureLoader.Origin.topLeft]
+            )
+        } catch {
+            fatalError("Failed to load image texture: \(error)")
+        }
     }
 }

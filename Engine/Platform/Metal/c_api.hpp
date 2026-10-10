@@ -21,6 +21,10 @@ void _renderer_bind_depth_stencil_state(void *swift_renderer_ptr,
 void _renderer_submit(void *swift_renderer_ptr, void *vertex_buffer,
                       void *index_buffer, uint32_t index_count,
                       void *uniform_buffer);
+void _renderer_submit_textured(void *swift_renderer_ptr, void *vertex_buffer,
+                               void *index_buffer, uint32_t index_count,
+                               void *uniform_buffer, void *texture,
+                               void *sampler);
 
 void _renderer_end_scene(void *swift_renderer_ptr);
 
@@ -42,12 +46,13 @@ void *_renderer_make_depth_stencil_state(void *swift_renderer_ptr,
 
 void *_renderer_make_sampler(void *swift_renderer_ptr, uint32_t min_filter,
                              uint32_t mag_filter, uint32_t mip_filter,
-                             uint32_t s_address_mode,
-                             uint32_t t_address_mode);
+                             uint32_t s_address_mode, uint32_t t_address_mode);
 
 void *_renderer_make_texture(void *swift_renderer_ptr, uint32_t pixel_format,
                              uint32_t width, uint32_t height,
                              uint32_t mipmap_level_count, uint32_t usage);
+void *_renderer_make_texture_from_image(void *swift_renderer_ptr,
+                                             const void *bytes, int size);
 
 void _release_metal_texture(void *texture);
 void _release_metal_sampler(void *sampler);
@@ -106,5 +111,4 @@ void _stencil_desc_set_masks(void *desc, uint32_t read_mask,
 void _release_metal_depth_stencil_descriptor(void *descriptor);
 void _release_metal_stencil_descriptor(void *descriptor);
 void _release_metal_depth_stencil_state(void *state);
-
 }

@@ -19,6 +19,9 @@ void bind_depth_stencil_state(std::shared_ptr<DepthStencilState> depth_stencil);
 void bind_pipeline(std::shared_ptr<Pipeline> pipeline);
 void submit(std::shared_ptr<VertexArray> vertex_array,
             std::shared_ptr<Buffer> uniforms);
+void submit(std::shared_ptr<VertexArray> vertex_array,
+            std::shared_ptr<Buffer> uniforms, std::shared_ptr<Texture> texture,
+            std::shared_ptr<Sampler> sampler);
 void end_scene();
 
 void on_window_resize(uint32_t width, uint32_t height);
@@ -39,6 +42,9 @@ make_depth_stencil_state(DepthStencilDescriptor desc);
 std::shared_ptr<Pipeline> make_pipeline(PipelineDescriptor pipeline_desc);
 
 std::shared_ptr<Texture> make_texture(TextureDescriptor texture_desc);
+
+std::shared_ptr<Texture> make_texture_from_image(const void *bytes,
+                                                       int size);
 
 std::shared_ptr<Sampler> make_sampler(SamplerDescriptor sampler_desc);
 
