@@ -5,11 +5,13 @@
 #include "Algae/Core/Window.hpp"
 #include "Algae/Event/ApplicationEvent.hpp"
 #include "Algae/Event/Event.hpp"
+#include <cstdint>
 
 namespace alg {
 
 struct AppSpec {
   WindowSpec window_spec;
+  uint32_t ticks_per_second = 20;
 };
 
 class Application {
@@ -35,6 +37,7 @@ private:
 
   LayerStack layer_stack;
 
-  bool running = true;
+  uint32_t ticks_per_second;
+  std::atomic<bool> running = true;
 };
 } // namespace alg
